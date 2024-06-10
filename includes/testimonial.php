@@ -6,7 +6,7 @@
                 Testimonial
             </div>
             <h1 class="display-6 mb-5">
-                Trusted By Thousands Of People And Nonprofits
+                Trusted By Thousands Of Volunteers & Organizations
             </h1>
         </div>
         <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
@@ -15,13 +15,12 @@
                     style="width: 100px; height: 100px" />
                 <div class="testimonial-text rounded text-center p-4">
                     <p>
-                        Clita clita tempor justo dolor ipsum amet kasd amet duo justo
-                        duo duo labore sed sed. Magna ut diam sit et amet stet eos sed
-                        clita erat magna elitr erat sit sit erat at rebum justo sea
-                        clita.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
+                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
+                        elitr erat, sit sit erat. At rebum justo, sea clita.
                     </p>
-                    <h5 class="mb-1">Doner Name</h5>
-                    <span class="fst-italic">Profession</span>
+                    <h5 class="mb-1">John Smith</h5>
+                    <span class="fst-italic">Software Engineer</span>
                 </div>
             </div>
             <div class="testimonial-item text-center">
@@ -29,13 +28,12 @@
                     style="width: 100px; height: 100px" />
                 <div class="testimonial-text rounded text-center p-4">
                     <p>
-                        Clita clita tempor justo dolor ipsum amet kasd amet duo justo
-                        duo duo labore sed sed. Magna ut diam sit et amet stet eos sed
-                        clita erat magna elitr erat sit sit erat at rebum justo sea
-                        clita.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
+                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
+                        elitr erat, sit sit erat. At rebum justo, sea clita.
                     </p>
-                    <h5 class="mb-1">Doner Name</h5>
-                    <span class="fst-italic">Profession</span>
+                    <h5 class="mb-1">Sarah Thompson</h5>
+                    <span class="fst-italic">Marketing Manager</span>
                 </div>
             </div>
             <div class="testimonial-item text-center">
@@ -43,13 +41,12 @@
                     style="width: 100px; height: 100px" />
                 <div class="testimonial-text rounded text-center p-4">
                     <p>
-                        Clita clita tempor justo dolor ipsum amet kasd amet duo justo
-                        duo duo labore sed sed. Magna ut diam sit et amet stet eos sed
-                        clita erat magna elitr erat sit sit erat at rebum justo sea
-                        clita.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
+                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
+                        elitr erat, sit sit erat. At rebum justo, sea clita.
                     </p>
-                    <h5 class="mb-1">Doner Name</h5>
-                    <span class="fst-italic">Profession</span>
+                    <h5 class="mb-1">Emily Johnson</h5>
+                    <span class="fst-italic">Marketing Consultant</span>
                 </div>
             </div>
         </div>

@@ -15,20 +15,20 @@
                     <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">About Us</div>
                     <h1 class="display-6 mb-5">We Help People In Need Around The World</h1>
                     <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
-                        <p class="text-dark mb-2">Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet
-                            lorem sit clita duo justo erat amet</p>
+                        <p class="text-dark mb-2">We are dedicated to providing assistance and support to those facing
+                            challenges. Our mission is to make a positive impact on communities worldwide.</p>
                         <span class="text-primary">Jhon Doe, Founder</span>
                     </div>
-                    <p class="mb-5">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet
-                        diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna
-                        dolore erat amet</p>
-                    <a class="btn btn-primary py-2 px-3 me-3" href="">
+                    <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor erat et elit
+                        placerat, sed tempus odio condimentum. Aliquam diam amet diam et eos. Clita erat ipsum et lorem
+                        et sit, sed stet lorem sit clita duo justo magna dolore erat amet.</p>
+                    <a class="btn btn-primary py-2 px-3 me-3" href="about.php">
                         Learn More
                         <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                             <i class="fa fa-arrow-right"></i>
                         </div>
                     </a>
-                    <a class="btn btn-outline-primary py-2 px-3" href="">
+                    <a class="btn btn-outline-primary py-2 px-3" href="contact.php">
                         Contact Us
                         <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                             <i class="fa fa-arrow-right"></i>

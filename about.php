@@ -57,7 +57,6 @@
 
 
     <?php include_once ('includes/about.php'); ?>
-    <?php include_once ('includes/service.php'); ?>
     <?php include_once ('includes/team.php'); ?>
 
 

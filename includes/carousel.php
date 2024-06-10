@@ -12,8 +12,8 @@
                                     Let's Change The World With Humanity
                                 </h1>
                                 <p class="fs-5 text-white-50 mb-5 animated slideInDown">
-                                    Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed
-                                    stet lorem sit clita duo justo erat amet
+                                    Join us in making a difference—because every act of kindness counts.
+                                    Together, we can transform lives and build a brighter future for all.
                                 </p>
                                 <a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
                                     Volunteer Now!
@@ -36,8 +36,8 @@
                                     Let's Save More Lifes With Our Helping Hand
                                 </h1>
                                 <p class="fs-5 text-white-50 mb-5 animated slideInDown">
-                                    Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed
-                                    stet lorem sit clita duo justo erat amet
+                                    Extend your helping hand to save more lives.
+                                    Together, we can bring hope and healing to those in need.
                                 </p>
                                 <a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
                                     Volunteer Now!

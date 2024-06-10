@@ -1,5 +1,25 @@
 <?php
+include_once ('config.php');
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch event data
+$sql = "SELECT * FROM event WHERE eventApproval = 1";
+$result = $conn->query($sql);
+$events = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $events[] = $row;
+    }
+} else {
+    echo "No events found";
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,88 +76,102 @@
     <!-- Page Header End -->
 
     <!-- Events List Start -->
-    <div class="container-xxl py-5">
+    <!-- <div class="container-xxl py-5">
         <div class="container">
             <div class="owl-carousel event-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <!-- Example Event Card 1 -->
+                <?php foreach ($events as $event):
+                    $percentage = round(($event['eventConfirm'] / $event['eventNeed']) * 100);
+                    ?>
                 <div class="card">
-                    <img src="img/courses-1.jpg" class="card-img-top" alt="Event 1">
                     <div class="card-body">
-                        <h5 class="card-title">Event 1</h5>
-                        <p class="card-text">Event 1 details...</p>
-                        <div class="causes-progress bg-light p-3 pt-2">
+                        <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
+                        <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
+                        <div class="causes-press bg-light p-3 pt-2">
                             <div class="d-flex justify-content-between">
                                 <p class="text-dark">
-                                    100 <small class="text-body">Needed</small>
+                                    <?php echo htmlspecialchars($event['eventNeed']); ?> <small
+                                        class="text-body">Needed</small>
                                 </p>
                                 <p class="text-dark">
-                                    90 <small class="text-body">Confirmed</small>
+                                    <?php echo htmlspecialchars($event['eventConfirm']); ?> <small
+                                        class="text-body">Confirmed</small>
                                 </p>
                             </div>
+
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    <span>90%</span>
+                                <div class="progress-bar" role="progressbar"
+                                    aria-valuenow="<?php echo htmlspecialchars($event['eventConfirm']); ?>"
+                                    aria-valuemin="0"
+                                    aria-valuemax="<?php echo htmlspecialchars($event['eventNeed']); ?>"
+                                    style="width: <?php echo $percentage; ?>%;">
+                                    <span><?php echo $percentage; ?>%</span>
                                 </div>
                             </div>
+
+
                         </div>
-                        <a href="event-details.php?event_id=1" class="btn btn-primary">More Details</a>
+                        <a href="event-details.php?event_id=<?php echo htmlspecialchars($event['eventID']); ?>"
+                            class="btn btn-primary">More Details</a>
                     </div>
                 </div>
-                <!-- Example Event Card 2 -->
-                <div class="card">
-                    <img src="img/courses-2.jpg" class="card-img-top" alt="Event 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Event 2</h5>
-                        <p class="card-text">Event 2 details...</p>
-                        <div class="causes-progress bg-light p-3 pt-2">
-                            <div class="d-flex justify-content-between">
-                                <p class="text-dark">
-                                    100 <small class="text-body">Needed</small>
-                                </p>
-                                <p class="text-dark">
-                                    90 <small class="text-body">Confirmed</small>
-                                </p>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    <span>90%</span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 justify-content-center">
+                <?php foreach ($events as $event):
+                    $percentage = round(($event['eventConfirm'] / $event['eventNeed']) * 100);
+                    ?>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card d-flex justify-content-center">
+                        <!-- Added justify-content-center class -->
+                        <img src="img/carousel-2.jpg" class="card-img-top mx-auto"
+                            alt="<?php echo htmlspecialchars($event['eventName']); ?>"
+                            style="width: 75%; height: 75%;" />
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
+                            <div class="causes-press bg-light p-3 pt-2">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark">
+                                        <?php echo htmlspecialchars($event['eventNeed']); ?> <small
+                                            class="text-body">Needed</small>
+                                    </p>
+                                    <p class="text-dark">
+                                        <?php echo htmlspecialchars($event['eventConfirm']); ?> <small
+                                            class="text-body">Confirmed</small>
+                                    </p>
+                                </div>
+
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"
+                                        aria-valuenow="<?php echo htmlspecialchars($event['eventConfirm']); ?>"
+                                        aria-valuemin="0"
+                                        aria-valuemax="<?php echo htmlspecialchars($event['eventNeed']); ?>"
+                                        style="width: <?php echo $percentage; ?>%;">
+                                        <span><?php echo $percentage; ?>%</span>
+                                    </div>
                                 </div>
                             </div>
+                            <a href="event-details.php?event_id=<?php echo htmlspecialchars($event['eventID']); ?>"
+                                class="btn btn-primary">More Details</a>
                         </div>
-                        <a href="event-details.php?event_id=2" class="btn btn-primary">More Details</a>
+
                     </div>
                 </div>
-                <!-- Example Event Card 3 -->
-                <div class="card">
-                    <img src="img/courses-3.jpg" class="card-img-top" alt="Event 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Event 3</h5>
-                        <p class="card-text">Event 3 details...</p>
-                        <div class="causes-progress bg-light p-3 pt-2">
-                            <div class="d-flex justify-content-between">
-                                <p class="text-dark">
-                                    100 <small class="text-body">Needed</small>
-                                </p>
-                                <p class="text-dark">
-                                    90 <small class="text-body">Confirmed</small>
-                                </p>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    <span>90%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="event-details.php?event_id=2" class="btn btn-primary">More Details</a>
-                    </div>
-                </div>
-                <!-- Add more event cards as needed -->
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
+
     <!-- Events List End -->
 
     <?php include_once ('includes/footer.php'); ?>
@@ -180,3 +214,7 @@
 </body>
 
 </html>
+
+<?php
+$conn->close();
+?>

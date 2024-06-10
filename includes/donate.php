@@ -9,11 +9,11 @@
                 <h1 class="display-6 text-white mb-5">
                     Thanks For The Results Achieved With You
                 </h1>
-                <p class="text-white-50 mb-0">
+                <!-- <p class="text-white-50 mb-0">
                     Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu
                     diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet
                     lorem sit clita duo justo magna dolore erat amet
-                </p>
+                </p> -->
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="h-100 bg-white p-5">

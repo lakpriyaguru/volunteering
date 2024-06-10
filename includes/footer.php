@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     Designed for the <i>CMIS 3224 - Web Designing and e – commerce</i> Group Project by
-                    <a href="">202213, 202216, 202063, 202***</a>
+                    <a href="">202063, 202097, 202213, 202216</a>
                 </div>
             </div>
         </div>

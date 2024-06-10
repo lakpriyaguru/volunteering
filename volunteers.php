@@ -1,5 +1,25 @@
 <?php
+include_once ('config.php');
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch event data
+$sql = "SELECT * FROM user";
+$result = $conn->query($sql);
+$events = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+} else {
+    echo "No users found";
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,41 +78,21 @@
     <!-- Volunteers List Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <!-- Example Card 1 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="card">
-                        <img src="img/team-1.jpg" class="card-img-top" alt="Volunteer 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Volunteer 1</h5>
-                            <p class="card-text">Volunteer 1 has participated in 50 events, providing invaluable support
-                                to various causes.</p>
+            <div class="row g-5 justify-content-center">
+                <?php foreach ($users as $user): ?>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card">
+                            <img src="img/team-1.jpg" class="card-img-top"
+                                alt="<?php echo htmlspecialchars($user['userName']); ?>">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
+                                <p class="card-text">This user has participated in
+                                    events.</p>
+                                <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Example Card 2 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="card">
-                        <img src="img/team-2.jpg" class="card-img-top" alt="Volunteer 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Volunteer 2</h5>
-                            <p class="card-text">Volunteer 2 has been active in 45 events, dedicating their time to
-                                making a difference.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Example Card 3 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="card">
-                        <img src="img/team-3.jpg" class="card-img-top" alt="Volunteer 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Volunteer 3</h5>
-                            <p class="card-text">Volunteer 3 has contributed to 40 events, helping communities and
-                                causes in need.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more cards as needed -->
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

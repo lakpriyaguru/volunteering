@@ -1,5 +1,25 @@
 <?php
+include_once ('config.php');
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch event data
+$sql = "SELECT * FROM organization";
+$result = $conn->query($sql);
+$events = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $organizations[] = $row;
+    }
+} else {
+    echo "No organizations found";
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,44 +78,22 @@
     <!-- Organizations List Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <!-- Example Card 1 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="card">
-                        <img src="img/courses-2.jpg" class="card-img-top" alt="Organization 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Organization 1</h5>
-                            <p class="card-text">This organization is dedicated to improving the environment through
-                                various volunteer activities.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
+            <div class="row g-5 justify-content-center">
+                <?php foreach ($organizations as $organization): ?>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card">
+                            <img src="img/org.jpg" class="card-img-top mx-auto"
+                                alt="<?php echo htmlspecialchars($organization['orgName']); ?>"
+                                style="width: 75%; height: 75%;" />
+
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?php echo htmlspecialchars($organization['orgName']); ?></h5>
+                                <p class="card-text"><?php echo htmlspecialchars($organization['orgDesc']); ?></p>
+                                <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Example Card 2 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="card">
-                        <img src="img/courses-1.jpg" class="card-img-top" alt="Organization 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Organization 2</h5>
-                            <p class="card-text">Focused on helping the homeless, this organization runs food drives and
-                                shelters for those in need.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Example Card 3 -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="card">
-                        <img src="img/courses-3.jpg" class="card-img-top" alt="Organization 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Organization 3</h5>
-                            <p class="card-text">This organization focuses on animal welfare, organizing rescue missions
-                                and adoption events.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more cards as needed -->
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

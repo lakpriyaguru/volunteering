@@ -43,8 +43,7 @@
 
     <?php include_once ('includes/carousel.php'); ?>
     <?php include_once ('includes/about.php'); ?>
-    <?php include_once ('includes/cause.php'); ?>
-    <?php include_once ('includes/service.php'); ?>
+
     <?php include_once ('includes/donate.php'); ?>
     <?php include_once ('includes/testimonial.php'); ?>
     <?php include_once ('includes/footer.php'); ?>

@@ -5,9 +5,9 @@
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                 <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Contact Us</div>
                 <h1 class="display-6 mb-5">If You Have Any Query, Please Contact Us</h1>
-                <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with
+                <!-- <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with
                     Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a
-                        href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
+                        href="https://htmlcodex.com/contact-form">Download Now</a>.</p> -->
                 <form>
                     <div class="row g-3">
                         <div class="col-md-6">
