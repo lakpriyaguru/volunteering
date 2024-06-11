@@ -12,7 +12,7 @@ A 3<sup>rd</sup> year undergraduate CS project under the CMIS 3224: Web Designin
 
 ### Details of the Students :
 
-| Group No. | ##  |
+| Group No. | 08  |
 | --------- | --- |
 
 | Registration Number | Name with Initials | Degree       | E-mail Address                  |
