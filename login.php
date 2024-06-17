@@ -1,7 +1,23 @@
 <?php
+session_start();
+include ('includes/config.php');
 
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = md5($_POST['password']); // Assuming password is stored as md5 hash in the database
+    $query = mysqli_query($con, "SELECT userID, userEmail, userName FROM user WHERE userEmail='$email' AND userPassword='$password'");
+    $ret = mysqli_fetch_array($query);
+    if ($ret > 0) {
+        $_SESSION['userID'] = $ret['userID'];
+        $_SESSION['userEmail'] = $ret['userEmail'];
+        $_SESSION['userName'] = $ret['userName'];
+        echo "<script>alert('Matta');</script>";
+        header('location:dashboard.php');
+    } else {
+        echo "<script>alert('Invalid Details.');</script>";
+    }
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,20 +81,20 @@
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="bg-light rounded p-5">
                         <h1 class="display-6 text-center mb-5">Login to Your Account</h1>
-                        <form>
+                        <form method="post">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="mb-3">
                                 <a href="reset.php" class="text-primary">Forgot Password?</a>
                             </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary py-2">Login</button>
+                                <button type="submit" class="btn btn-primary py-2" name="login">Login</button>
                             </div>
                             <div class="text-center mt-3">
                                 <p>Don't have an account? <a href="signup.php" class="text-primary">Sign Up</a></p>

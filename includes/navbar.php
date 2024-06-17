@@ -35,14 +35,30 @@
                 <a href="contact.php" class="nav-item nav-link">Contact Us</a>
 
             </div>
-            <div class="d-none d-lg-flex ms-2">
-                <a class="btn btn-outline-primary py-2 px-3" href="login.php">
-                    Login
-                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </a>
+            <?php
+            if (!isset($_SESSION['userID'])) {
+                echo '
+    <div class="d-none d-lg-flex ms-2">
+        <a class="btn btn-outline-primary py-2 px-3" href="login.php">
+            Login
+            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                <i class="fa fa-arrow-right"></i>
             </div>
+        </a>
+    </div>';
+            } else {
+                echo '<div class="d-none d-lg-flex ms-2 dropdown">
+        <a class="btn btn-outline-primary py-2 px-3 dropdown-toggle" href="#" role="button"
+            id="dropdownMenuLink" data-bs-toggle="dropdown"
+            aria-expanded="false">' . $_SESSION['userName'] . '</a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
+            <li><a class="dropdown-item" href="signout.php">Logout</a></li>
+        </ul>
+    </div>';
+            }
+            ?>
+
         </div>
     </nav>
 </div>

@@ -15,12 +15,25 @@
                                     Join us in making a difference—because every act of kindness counts.
                                     Together, we can transform lives and build a brighter future for all.
                                 </p>
-                                <a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
+
+                                <?php
+                                if (!isset($_SESSION['userID'])) {
+                                    echo '<a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
                                     Volunteer Now!
                                     <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
-                                </a>
+                                </a>';
+                                } else {
+                                    echo '<a class="btn btn-primary py-2 px-3 animated slideInDown" href="events.php">
+                                    Volunteer Now!
+                                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </a>';
+                                }
+                                ?>
+
                             </div>
                         </div>
                     </div>
@@ -39,12 +52,23 @@
                                     Extend your helping hand to save more lives.
                                     Together, we can bring hope and healing to those in need.
                                 </p>
-                                <a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
+                                <?php
+                                if (!isset($_SESSION['userID'])) {
+                                    echo '<a class="btn btn-primary py-2 px-3 animated slideInDown" href="signup.php">
                                     Volunteer Now!
                                     <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
-                                </a>
+                                </a>';
+                                } else {
+                                    echo '<a class="btn btn-primary py-2 px-3 animated slideInDown" href="events.php">
+                                    Volunteer Now!
+                                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </a>';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

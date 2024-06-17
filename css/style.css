@@ -446,3 +446,13 @@
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+.dropdown-menu {
+    background-color: #fff; /* Dropdown background color */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ddd; /* Border color */
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Hover effect */
+}

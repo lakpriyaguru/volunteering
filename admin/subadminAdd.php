@@ -16,10 +16,29 @@ if (strlen($_SESSION['adminID']) == 0) {
     $adminType = "0"; // Assuming adminType is always 0
     $query = mysqli_query($con, "INSERT INTO admin(adminName, adminEmail, adminPassword, adminContact, adminType) VALUES ('$fullname', '$email', '$password', '$mobilenumber', '$adminType')");
     if ($query) {
-      echo "<script>alert('Sub-Admin details added successfully.');</script>";
-      echo "<script type='text/javascript'> document.location = 'subadminManage.php'; </script>";
+      echo "<script>
+              document.addEventListener('DOMContentLoaded', function() {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Sub-Admin added successfully',
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(function() {
+                      window.location = 'userManage.php';
+                  });
+              });
+          </script>";
     } else {
-      echo "<script>alert('Something went wrong. Please try again.');</script>";
+      echo "<script>
+              document.addEventListener('DOMContentLoaded', function() {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Something went wrong. Please try again.',
+                      showConfirmButton: false,
+                      timer: 1500
+                  });
+              });
+          </script>";
     }
   }
 
@@ -44,6 +63,10 @@ if (strlen($_SESSION['adminID']) == 0) {
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!--Function Email Availabilty---->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
 

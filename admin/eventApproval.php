@@ -295,7 +295,7 @@ if (strlen($_SESSION['adminID']) == 0) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "Do you really want to decline this event?",
-                    icon: 'error',
+                    icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',

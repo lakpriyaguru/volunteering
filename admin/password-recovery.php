@@ -24,113 +24,114 @@ if (isset($_POST['resetpwd'])) {
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
-  <title>Volunteering | Volunteer Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <title>Volunteering | Volunteer Management System</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <script type="text/javascript">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <script type="text/javascript">
     function valid() {
-      if (document.passwordrecovery.newpassword.value != document.passwordrecovery.confirmpassword.value) {
-        alert("New Password and Confirm Password Field do not match  !!");
-        document.passwordrecovery.confirmpassword.focus();
-        return false;
-      }
-      return true;
+        if (document.passwordrecovery.newpassword.value != document.passwordrecovery.confirmpassword.value) {
+            alert("New Password and Confirm Password Field do not match  !!");
+            document.passwordrecovery.confirmpassword.focus();
+            return false;
+        }
+        return true;
     }
-  </script>
+    </script>
 
 </head>
 
 <body class="hold-transition login-page">
-  <div class="login-box">
-    <!-- /.login-logo -->
-    <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-        <a href="index.php" class="h1"><b>Admin Password Recovery</a>
-      </div>
-      <div class="card-body">
-        <p class="login-box-msg">Reset your password</p>
-
-        <form name="passwordrecovery" method="post" onSubmit="return valid();">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" name="email" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="index.php" class="h1"><b>Admin Password Recovery</a>
             </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Mobile Number" name="mobileNumber" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-phone"></span>
-              </div>
+            <div class="card-body">
+                <p class="login-box-msg">Reset your password</p>
+
+                <form name="passwordrecovery" method="post" onSubmit="return valid();">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" name="email" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Mobile Number" name="mobileNumber"
+                            required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-phone"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" name="newpassword"
+                            id="newpassword" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Confirm Password"
+                            name="confirmpassword" id="confirmpassword" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="resetpwd">Reset</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+
+                <p class="mb-1">
+                    <a href="index.php">Signin</a>
+                </p>
+
             </div>
-          </div>
-
-
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" name="newpassword" id="newpassword"
-              required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Confirm Password" name="confirmpassword"
-              id="confirmpassword" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-8">
-
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block" name="resetpwd">Reset</button>
-            </div>
-            <!-- /.col -->
-          </div>
-        </form>
-
-
-        <p class="mb-1">
-          <a href="index.php">Signin</a>
-        </p>
-
-      </div>
-      <!-- /.card-body -->
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
-  </div>
-  <!-- /.login-box -->
+    <!-- /.login-box -->
 
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +39,15 @@
 
 <body>
     <?php include_once ('includes/spinner.php'); ?>
+
     <?php include_once ('includes/navbar.php'); ?>
+
+
 
     <?php include_once ('includes/carousel.php'); ?>
     <?php include_once ('includes/about.php'); ?>
 
-    <?php include_once ('includes/donate.php'); ?>
+
     <?php include_once ('includes/testimonial.php'); ?>
     <?php include_once ('includes/footer.php'); ?>
 

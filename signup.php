@@ -140,16 +140,16 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        function showForm() {
-            var userType = document.getElementById("userType").value;
-            if (userType === "volunteer") {
-                document.getElementById("volunteerForm").style.display = "block";
-                document.getElementById("organizationForm").style.display = "none";
-            } else {
-                document.getElementById("volunteerForm").style.display = "none";
-                document.getElementById("organizationForm").style.display = "block";
-            }
+    function showForm() {
+        var userType = document.getElementById("userType").value;
+        if (userType === "volunteer") {
+            document.getElementById("volunteerForm").style.display = "block";
+            document.getElementById("organizationForm").style.display = "none";
+        } else {
+            document.getElementById("volunteerForm").style.display = "none";
+            document.getElementById("organizationForm").style.display = "block";
         }
+    }
     </script>
 </body>
 

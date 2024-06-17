@@ -11,10 +11,29 @@ if (strlen($_SESSION['adminID']) == 0) {
         $userID = intval($_GET['said']);
         $query = mysqli_query($con, "delete from user where userID = '$userID'");
         if ($query) {
-            echo "<script>alert('User record deleted successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'userManage.php'; </script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'User record deleted Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location = 'userManage.php';
+                        });
+                    });
+                </script>";
         } else {
-            echo "<script>alert('Something went wrong. Please try again.');</script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
         }
 
     }
@@ -40,6 +59,10 @@ if (strlen($_SESSION['adminID']) == 0) {
         <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     </head>
 
     <body class="hold-transition sidebar-mini">

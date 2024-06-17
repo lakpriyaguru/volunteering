@@ -22,10 +22,29 @@ if (strlen($_SESSION['adminID']) == 0) {
 
         $query = mysqli_query($con, "INSERT INTO user(userName, userEmail, userPassword, userAddress, userNIC, userContact) VALUES ('$fullname', '$email', '$password', '$address', '$nic', '$mobilenumber')");
         if ($query) {
-            echo "<script>alert('User details added successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'userManage.php'; </script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'User Added Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location = 'userManage.php';
+                        });
+                    });
+                </script>";
         } else {
-            echo "<script>alert('Something went wrong. Please try again.');</script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
         }
     }
 
@@ -51,6 +70,9 @@ if (strlen($_SESSION['adminID']) == 0) {
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
         <!--Function Email Availabilty---->
 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
 

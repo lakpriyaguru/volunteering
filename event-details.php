@@ -1,19 +1,18 @@
 <?php
-include_once ('config.php');
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+include_once ('includes/config.php');
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Ensure the connection is successful
+if (mysqli_connect_errno()) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 // Fetch event details based on event ID from URL parameter
 if (isset($_GET['event_id'])) {
     $event_id = $_GET['event_id'];
     $sql = "SELECT e.*, o.orgName FROM event e INNER JOIN organization o ON e.orgID = o.orgID WHERE e.eventID = $event_id AND e.eventApproval = 1";
-    $result = $conn->query($sql);
+    $result = mysqli_query($con, $sql);
     if ($result->num_rows > 0) {
         $event = $result->fetch_assoc();
     } else {

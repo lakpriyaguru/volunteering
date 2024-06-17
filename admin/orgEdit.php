@@ -18,10 +18,29 @@ if (strlen($_SESSION['adminID']) == 0) {
 
         $query = mysqli_query($con, "update organization set orgName='$fullname', orgEmail='$email', orgAddress = '$address', orgRegNo = '$regNo', orgContact = '$mobilenumber' where orgID = '$orgID'");
         if ($query) {
-            echo "<script>alert('Organization details edited successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'orgManage.php'; </script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Organization Details Edited Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location = 'orgManage.php';
+                        });
+                    });
+                </script>";
         } else {
-            echo "<script>alert('Something went wron. Please try again.');</script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
         }
     }
     ?>
@@ -43,6 +62,10 @@ if (strlen($_SESSION['adminID']) == 0) {
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
         <!--Function Email Availabilty---->
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
     </head>

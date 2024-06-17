@@ -1,17 +1,16 @@
 <?php
-include_once ('config.php');
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+include_once ('includes/config.php');
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Ensure the connection is successful
+if (mysqli_connect_errno()) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 // Fetch event data
 $sql = "SELECT * FROM organization";
-$result = $conn->query($sql);
+$result = mysqli_query($con, $sql);
 $events = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {

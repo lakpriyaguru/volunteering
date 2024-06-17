@@ -35,10 +35,29 @@ if (strlen($_SESSION['adminID']) == 0) {
 
         $query = mysqli_query($con, "INSERT INTO event(eventName, eventDesc, eventStart, eventEnd, eventNeed, orgID) VALUES ('$eventName', '$eventDesc', '$eventStart', '$eventEnd', '$eventNeed', '$orgID')");
         if ($query) {
-            echo "<script>alert('Event details added successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'eventManage.php'; </script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Event Details Added Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location = 'eventManage.php';
+                        });
+                    });
+                </script>";
         } else {
-            echo "<script>alert('Something went wrong. Please try again.');</script>";
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
         }
     }
 
@@ -63,6 +82,10 @@ if (strlen($_SESSION['adminID']) == 0) {
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
         <!--Function Email Availabilty---->
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
     </head>

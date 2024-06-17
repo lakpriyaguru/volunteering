@@ -1,24 +1,20 @@
 <?php
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['userID'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Include database connection file
 include_once ('includes/config.php');
 
-// Ensure the connection is successful
-if (mysqli_connect_errno()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Fetch event data
-$sql = "SELECT * FROM user";
-$result = mysqli_query($con, $sql);
-$events = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $users[] = $row;
-    }
-} else {
-    echo "No users found";
-}
+// Fetch user data from the database
+$userID = $_SESSION['userID'];
+$query = "SELECT * FROM user WHERE userID = '$userID'";
+$result = mysqli_query($con, $query);
+$user = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +22,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="utf-8" />
-    <title>Volunteering - Platform for Volunteers</title>
+    <title>Dashboard - Volunteering Platform</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="keywords" />
     <meta content="" name="description" />
@@ -57,45 +53,34 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-    <?php include_once ('includes/spinner.php'); ?>
     <?php include_once ('includes/navbar.php'); ?>
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <h1 class="display-4 text-white animated slideInDown mb-4">Volunteers</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a class="text-white" href="index.php">Home</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Volunteers</li>
-                </ol>
-            </nav>
+            <h1 class="display-4 text-white animated slideInDown mb-4">Dashboard</h1>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Volunteers List Start -->
+    <!-- Dashboard Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5 justify-content-center">
-                <?php foreach ($users as $user): ?>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card">
-                            <img src="img/team-1.jpg" class="card-img-top"
-                                alt="<?php echo htmlspecialchars($user['userName']); ?>">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
-                                <p class="card-text">This user has participated in
-                                    events.</p>
-                                <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
-                            </div>
-                        </div>
+            <div class="row g-5">
+                <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-light rounded p-5">
+                        <h1 class="display-6 text-center mb-5">Welcome,
+                            <?php echo $user['userName']; ?>
+                        </h1>
+                        <p>Email: <?php echo $user['userEmail']; ?></p>
+                        <p>Joined on: <?php echo $user['userRegDate']; ?></p>
+                        <!-- Add more user information here as needed -->
                     </div>
-                <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Volunteers List End -->
+    <!-- Dashboard End -->
 
     <?php include_once ('includes/footer.php'); ?>
 
@@ -106,7 +91,6 @@ if ($result->num_rows > 0) {
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

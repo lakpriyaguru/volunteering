@@ -12,10 +12,29 @@ if (strlen($_SESSION['adminID']) == 0) {
 
     $query = mysqli_query($con, "update organization set orgPassword='$password' where orgID='$orgID'");
     if ($query) {
-      echo "<script>alert('Organization password reset successfully.');</script>";
-      echo "<script type='text/javascript'> document.location = 'orgManage.php'; </script>";
+      echo "<script>
+              document.addEventListener('DOMContentLoaded', function() {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Organization Password Reset Successfully',
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(function() {
+                      window.location = 'orgManage.php';
+                  });
+              });
+          </script>";
     } else {
-      echo "<script>alert('Something went wron. Please try again.');</script>";
+      echo "<script>
+              document.addEventListener('DOMContentLoaded', function() {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Something went wrong. Please try again.',
+                      showConfirmButton: false,
+                      timer: 1500
+                  });
+              });
+          </script>";
     }
   }
 
@@ -38,17 +57,28 @@ if (strlen($_SESSION['adminID']) == 0) {
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!--Function password and confirm password validation---->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
     <script type="text/javascript">
       function checkpass() {
         if (document.resetpassword.password.value != document.resetpassword.confirmpassword.value) {
-          alert('New Password and Confirm Password field does not match');
+          Swal.fire({
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Password and Confirm Password field does not match',
+            showConfirmButton: false,
+            timer: 1500
+          });
           document.resetpassword.confirmpassword.focus();
           return false;
         }
         return true;
       }
     </script>
-    </script>
+
 
   </head>
 
