@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include ('includes/config.php');
 
 if (isset($_POST['login'])) {
@@ -11,10 +12,18 @@ if (isset($_POST['login'])) {
         $_SESSION['userID'] = $ret['userID'];
         $_SESSION['userEmail'] = $ret['userEmail'];
         $_SESSION['userName'] = $ret['userName'];
-        echo "<script>alert('Matta');</script>";
         header('location:dashboard.php');
     } else {
-        echo "<script>alert('Invalid Details.');</script>";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function(event) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Credintials. Try Again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>";
     }
 }
 ?>
@@ -52,6 +61,9 @@ if (isset($_POST['login'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

@@ -50,6 +50,9 @@ $user = mysqli_fetch_assoc($result);
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -66,21 +69,47 @@ $user = mysqli_fetch_assoc($result);
     <!-- Dashboard Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-light rounded p-5">
-                        <h1 class="display-6 text-center mb-5">Welcome,
-                            <?php echo $user['userName']; ?>
-                        </h1>
-                        <p>Email: <?php echo $user['userEmail']; ?></p>
-                        <p>Joined on: <?php echo $user['userRegDate']; ?></p>
-                        <!-- Add more user information here as needed -->
+            <div class="row g-5 justify-content-center">
+                <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card shadow-lg border-0 rounded-lg">
+                        <div class="card-header bg-primary text-white text-center py-4">
+                            <h1 class="display-6 mb-0">Welcome, <?php echo htmlspecialchars($user['userName']); ?></h1>
+                        </div>
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <img src="img/team-1.jpg" alt="User Image" class="rounded-circle" width="150"
+                                    height="150">
+                            </div>
+                            <div class="row mb-3 text-center">
+                                <p><strong>User ID:</strong> <?php echo htmlspecialchars($user['userID']); ?></p>
+                                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['userEmail']); ?></p>
+                                <p><strong>Address:</strong> <?php echo htmlspecialchars($user['userAddress']); ?>
+                                </p>
+                                <p><strong>NIC:</strong> <?php echo htmlspecialchars($user['userNIC']); ?></p>
+                                <p><strong>Contact:</strong> <?php echo htmlspecialchars($user['userContact']); ?>
+                                </p>
+                                <p><strong>Number of Events
+                                        Participated:</strong><?php echo htmlspecialchars($user['userNoOfEvents']); ?>
+                                </p>
+                                <p><strong>Joined on:</strong> <?php echo htmlspecialchars($user['userRegDate']); ?>
+                                </p>
+                            </div>
+                            <div class="text-center mt-4">
+                                <a class="btn btn-success">View Participated Events</a>
+                                <a href="user/editUser.php?userID=<?php echo htmlspecialchars($user['userID']); ?>"
+                                    class="btn btn-primary">Edit Details</a>
+                                <a class="btn btn-danger"
+                                    onclick="deleteAcc('<?php echo htmlspecialchars($user['userID']); ?>')">Delete
+                                    Account</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Dashboard End -->
+
 
     <?php include_once ('includes/footer.php'); ?>
 
@@ -94,6 +123,24 @@ $user = mysqli_fetch_assoc($result);
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        function deleteAcc(userID) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you really want to delete your Account?. This action cannot be undone.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "dashboard.php?action=delete&said=" + userID;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

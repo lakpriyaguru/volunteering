@@ -61,7 +61,6 @@ if (strlen($_SESSION['adminID']) == 0) {
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     </head>
 
@@ -149,15 +148,20 @@ if (strlen($_SESSION['adminID']) == 0) {
                                                             </td>
                                                             <th>
                                                                 <a href="userEdit.php?said=<?php echo $result['userID']; ?>"
-                                                                    title="Edit User Details"> <i class="fa fa-edit"
-                                                                        aria-hidden="true"></i> </a>
-                                                                <a href="userManage.php?action=delete&&said=<?php echo $result['userID']; ?>"
-                                                                    style="color:red;" title="Delete this record"
-                                                                    onclick="return confirm('Do you really want to delete this record?');"><i
-                                                                        class="fa fa-trash" aria-hidden="true"></i> </a>
+                                                                    title="Edit User Details">
+                                                                    <button style="color:green;" title="Edit User Details"><i
+                                                                            class="fas fa-pencil-alt"
+                                                                            aria-hidden="true"></i></button>
+                                                                </a>
+                                                                <button onclick="deleteUser('<?php echo $result['userID']; ?>')"
+                                                                    style="color:red;" title="Delete this User"><i
+                                                                        class="fas fa-trash-alt"
+                                                                        aria-hidden="true"></i></button>
+
                                                                 <a href="userResetPwd.php?said=<?php echo $result['userID']; ?>"
-                                                                    title="Reset User Password"> <i class="fa fa-key"
-                                                                        aria-hidden="true"></i></a>
+                                                                    title="Reset User Password">
+                                                                    <button style="color:blue;" title="Reset User Password"><i
+                                                                            class="fa fa-key" aria-hidden="true"></i></button>
                                                             </th>
                                                         </tr>
                                                         <?php
@@ -243,6 +247,22 @@ if (strlen($_SESSION['adminID']) == 0) {
                     "responsive": true,
                 });
             });
+
+            function deleteUser(userID) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this User?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "userManage.php?action=delete&said=" + userID;
+                    }
+                });
+            }
         </script>
     </body>
 
