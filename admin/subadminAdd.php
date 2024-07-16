@@ -45,10 +45,10 @@ if (strlen($_SESSION['adminID']) == 0) {
 
   ?>
 
-  <!DOCTYPE html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
@@ -57,7 +57,7 @@ if (strlen($_SESSION['adminID']) == 0) {
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -65,26 +65,25 @@ if (strlen($_SESSION['adminID']) == 0) {
     <!--Function Email Availabilty---->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
 
 
     <script>
-      function checkAvailability() {
+    function checkAvailability() {
         $("#loaderIcon").show();
         jQuery.ajax({
-          url: "subadminAvailability.php",
-          data: 'email=' + $("#email").val(),
-          type: "POST",
-          success: function (data) {
-            $("#user-availability-status").html(data);
-            $("#loaderIcon").hide();
-          },
-          error: function () { }
+            url: "subadminAvailability.php",
+            data: 'email=' + $("#email").val(),
+            type: "POST",
+            success: function(data) {
+                $("#user-availability-status").html(data);
+                $("#loaderIcon").hide();
+            },
+            error: function() {}
         });
-      }
+    }
     </script>
 
 
@@ -92,107 +91,108 @@ if (strlen($_SESSION['adminID']) == 0) {
 
 
 
-  </head>
+</head>
 
-  <body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini">
     <div class="wrapper">
-      <!-- Navbar -->
-      <?php include_once ("includes/navbar.php"); ?>
-      <!-- /.navbar -->
+        <!-- Navbar -->
+        <?php include_once ("includes/navbar.php"); ?>
+        <!-- /.navbar -->
 
-      <!-- Main Sidebar Container -->
-      <?php include_once ("includes/sidebar.php"); ?>
+        <!-- Main Sidebar Container -->
+        <?php include_once ("includes/sidebar.php"); ?>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1>Create Sub-Admin</h1>
-              </div>
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Add Sub-Admin</li>
-                </ol>
-              </div>
-            </div>
-          </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <!-- left column -->
-              <div class="col-md-8">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Fill the Info</h3>
-                  </div>
-                  <!-- /.card-header -->
-                  <!-- form start -->
-                  <form name="subadmin" method="post">
-                    <div class="card-body">
-                      <!-- Username-->
-
-                      <!-- Subadmin Full Name--->
-                    <div class="form-group">
-                      <label for="exampleInputFullname">Full Name</label>
-                      <input type="text" class="form-control" id="fullname" name="fullname"
-                        placeholder="Enter Full Name" required>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Create Sub-Admin</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Add Sub-Admin</li>
+                            </ol>
+                        </div>
                     </div>
-                    <!-- Sub admin Email---->
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Address"
-                          onBlur="checkAvailability()" required>
-                        <span id="user-availability-status" style="font-size:14px;"></span>
-                      </div>
+                </div><!-- /.container-fluid -->
+            </section>
 
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                          required>
-                      </div>
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-8">
+                            <!-- general form elements -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Fill the Info</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <form name="subadmin" method="post">
+                                    <div class="card-body">
+                                        <!-- Username-->
 
-                      <!-- Sub admin Contact Number---->
-                      <div class="form-group">
-                        <label for="text">Mobile Number</label>
-                        <input type="text" class="form-control" id="mobilenumber" name="mobilenumber"
-                          placeholder="Enter Mobile Number" pattern="[0-9]{10}" title="10 numeric characters only"
-                          required>
-                      </div>
+                                        <!-- Subadmin Full Name--->
+                                        <div class="form-group">
+                                            <label for="exampleInputFullname">Full Name</label>
+                                            <input type="text" class="form-control" id="fullname" name="fullname"
+                                                placeholder="Enter Full Name" required>
+                                        </div>
+                                        <!-- Sub admin Email---->
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email Address</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Enter Email Address" onBlur="checkAvailability()" required>
+                                            <span id="user-availability-status" style="font-size:14px;"></span>
+                                        </div>
 
-                      <!---Password--->
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="Password" required>
+                                        </div>
+
+                                        <!-- Sub admin Contact Number---->
+                                        <div class="form-group">
+                                            <label for="text">Mobile Number</label>
+                                            <input type="text" class="form-control" id="mobilenumber"
+                                                name="mobilenumber" placeholder="Enter Mobile Number"
+                                                pattern="[0-9]{10}" title="10 numeric characters only" required>
+                                        </div>
+
+                                        <!---Password--->
 
 
 
-                  </div>
-                  <!-- /.card-body -->
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary" name="submit"
+                                            id="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card -->
+
+
+
+                        </div>
+                        <!--/.col (left) -->
+
                     </div>
-                  </form>
-                </div>
-                <!-- /.card -->
-
-
-
-              </div>
-              <!--/.col (left) -->
-
-            </div>
-            <!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-      </div>
-      <!-- /.content-wrapper -->
-      <?php include_once ('includes/footer.php'); ?>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <?php include_once ('includes/footer.php'); ?>
 
     </div>
     <!-- ./wrapper -->
@@ -212,14 +212,14 @@ if (strlen($_SESSION['adminID']) == 0) {
 
 
     <script>
-      $(function () {
+    $(function() {
         bsCustomFileInput.init();
-      });
+    });
     </script>
 
 
 
-  </body>
+</body>
 
-  </html>
+</html>
 <?php } ?>

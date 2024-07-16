@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
 }
 
 // Fetch event data
-$sql = "SELECT * FROM user";
+$sql = "SELECT * FROM user ORDER BY userNoOfEvents DESC";
 $result = mysqli_query($con, $sql);
 $events = [];
 if ($result->num_rows > 0) {
@@ -19,42 +19,15 @@ if ($result->num_rows > 0) {
 } else {
     echo "No users found";
 }
+
+// Close the database connection
+mysqli_close($con);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Volunteering - Platform for Volunteers</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
-        rel="stylesheet" />
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet" />
-</head>
+<?php include_once ('includes/header.php'); ?>
 
 <body>
     <?php include_once ('includes/spinner.php'); ?>
@@ -79,18 +52,18 @@ if ($result->num_rows > 0) {
         <div class="container">
             <div class="row g-5 justify-content-center">
                 <?php foreach ($users as $user): ?>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card">
-                            <img src="img/team-1.jpg" class="card-img-top"
-                                alt="<?php echo htmlspecialchars($user['userName']); ?>">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
-                                <p class="card-text">This user has participated in
-                                    events.</p>
-                                <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
-                            </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card">
+                        <img src="<?php echo htmlspecialchars($user['userImg']); ?>" class="card-img-top"
+                            alt="<?php echo htmlspecialchars($user['userName']); ?>">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
+                            <p class="card-text">This user has participated in
+                                <?php echo htmlspecialchars($user['userNoOfEvents']); ?> events.</p>
+                            <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
                         </div>
                     </div>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>

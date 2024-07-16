@@ -4,67 +4,61 @@ session_start();
 include ('includes/config.php');
 
 if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']); // Assuming password is stored as md5 hash in the database
-    $query = mysqli_query($con, "SELECT userID, userEmail, userName FROM user WHERE userEmail='$email' AND userPassword='$password'");
-    $ret = mysqli_fetch_array($query);
-    if ($ret > 0) {
-        $_SESSION['userID'] = $ret['userID'];
-        $_SESSION['userEmail'] = $ret['userEmail'];
-        $_SESSION['userName'] = $ret['userName'];
-        header('location:dashboard.php');
-    } else {
-        echo "<script>
+    $role = $_POST['role'];
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $password = md5($_POST['password']);
+
+    if ($role == 'organization') {
+        $query = mysqli_query($con, "SELECT orgID, orgName, orgEmail FROM organization WHERE orgEmail='$email' AND orgPassword='$password'");
+        $ret = mysqli_fetch_array($query);
+        if ($ret) {
+            $_SESSION['Role'] = 'organization';
+            $_SESSION['ID'] = $ret['orgID'];
+            $_SESSION['Name'] = $ret['orgName'];
+            header('location:dashboard.php');
+        } else {
+            echo "<script>
             document.addEventListener('DOMContentLoaded', function(event) {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Invalid Credintials. Try Again.',
+                    text: 'Invalid Credentials. Try Again.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
             });
         </script>";
+        }
+    } else if ($role == 'volunteer') {
+        $query = mysqli_query($con, "SELECT userID, userName, userEmail FROM user WHERE userEmail='$email' AND userPassword='$password'");
+        $ret = mysqli_fetch_array($query);
+        if ($ret) {
+            $_SESSION['Role'] = 'volunteer';
+            $_SESSION['ID'] = $ret['userID'];
+            $_SESSION['Name'] = $ret['userName'];
+            header('location:dashboard.php');
+        } else {
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function(event) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Credentials. Try Again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>";
+        }
     }
 }
+// Close the database connection
+mysqli_close($con);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Volunteering - Platform for Volunteers</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
-        rel="stylesheet" />
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-</head>
+<?php include_once ('includes/header.php'); ?>
 
 <body>
 
@@ -95,6 +89,14 @@ if (isset($_POST['login'])) {
                         <h1 class="display-6 text-center mb-5">Login to Your Account</h1>
                         <form method="post">
                             <div class="mb-3">
+                                <label for="role" class="form-label">Login as</label>
+                                <select class="form-select" id="role" name="role" required>
+                                    <option value="" disabled selected>Select your role</option>
+                                    <option value="organization">Organization</option>
+                                    <option value="volunteer">Volunteer</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
@@ -117,6 +119,7 @@ if (isset($_POST['login'])) {
             </div>
         </div>
     </div>
+
     <!-- Login End -->
 
     <?php include_once ('includes/footer.php'); ?>

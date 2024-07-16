@@ -36,7 +36,7 @@
 
             </div>
             <?php
-            if (!isset($_SESSION['userID'])) {
+            if (!isset($_SESSION['ID'])) {
                 echo '
     <div class="d-none d-lg-flex ms-2">
         <a class="btn btn-outline-primary py-2 px-3" href="login.php">
@@ -50,7 +50,7 @@
                 echo '<div class="d-none d-lg-flex ms-2 dropdown">
         <a class="btn btn-outline-primary py-2 px-3 dropdown-toggle" href="#" role="button"
             id="dropdownMenuLink" data-bs-toggle="dropdown"
-            aria-expanded="false">' . $_SESSION['userName'] . '</a>
+            aria-expanded="false">' . $_SESSION['Name'] . '</a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
             <li><a class="dropdown-item" href="signout.php">Logout</a></li>

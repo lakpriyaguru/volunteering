@@ -11,7 +11,7 @@ if (mysqli_connect_errno()) {
 // Fetch event details based on event ID from URL parameter
 if (isset($_GET['event_id'])) {
     $event_id = $_GET['event_id'];
-    $sql = "SELECT e.*, o.orgName FROM event e INNER JOIN organization o ON e.orgID = o.orgID WHERE e.eventID = $event_id AND e.eventApproval = 1";
+    $sql = "SELECT e.*, o.orgName FROM event e INNER JOIN organization o ON e.orgID = o.orgID WHERE e.eventID = $event_id AND e.eventApproval = 'Approved'";
     $result = mysqli_query($con, $sql);
     if ($result->num_rows > 0) {
         $event = $result->fetch_assoc();
@@ -23,42 +23,15 @@ if (isset($_GET['event_id'])) {
     echo "Event ID not provided";
     exit; // Stop execution if event ID not provided
 }
+
+// Close the database connection
+mysqli_close($con);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Volunteering - Platform for Volunteers</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
-        rel="stylesheet" />
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet" />
-</head>
+<?php include_once ('includes/header.php'); ?>
 
 <body>
     <?php include_once ('includes/spinner.php'); ?>
@@ -103,7 +76,7 @@ if (isset($_GET['event_id'])) {
                         </ul>
                         <div class="mt-3">
                             <a href="javascript:history.back()" class="btn btn-secondary me-2">Go Back</a>
-                            <a href="" class="btn btn-primary">Participate</a>
+                            <a href="" onclick=participate() class="btn btn-primary">Participate</a>
                         </div>
                     </div>
                 </div>
@@ -128,6 +101,35 @@ if (isset($_GET['event_id'])) {
 
     <!-- Initialize Owl Carousel -->
 
+    <script>
+        function participate() {
+            var event_id = <?php echo $event_id; ?>;
+            var user_id = <?php echo $_SESSION['ID']; ?>;
+            var event_need = <?php echo $event['eventNeed']; ?>;
+            var event_confirm = <?php echo $event['eventConfirm']; ?>;
+            var event_confirm = event_confirm + 1;
+            if (event_confirm > event_need) {
+                alert("Event is full. Please try another event.");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "participate.php",
+                data: {
+                    event_id: event_id,
+                    user_id: user_id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        alert("Participation successful");
+                        window.location.href = "events.php";
+                    } else {
+                        alert("Participation failed");
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
