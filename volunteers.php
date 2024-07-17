@@ -11,13 +11,25 @@ if (mysqli_connect_errno()) {
 // Fetch event data
 $sql = "SELECT * FROM user ORDER BY userNoOfEvents DESC";
 $result = mysqli_query($con, $sql);
-$events = [];
+$users = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $users[] = $row;
     }
 } else {
-    echo "No users found";
+    //display event not found in the table
+    echo "<script>
+            document.addEventListener('DOMContentLoaded', function(event) {
+                Swal.fire({
+                    title: 'No Volunteers Found!',
+                    text: 'There are no Volunteers available at the moment.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                }).then(function() {
+                    window.location = 'index.php';
+                });
+            });
+        </script>";
 }
 
 // Close the database connection
@@ -52,18 +64,19 @@ mysqli_close($con);
         <div class="container">
             <div class="row g-5 justify-content-center">
                 <?php foreach ($users as $user): ?>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="card">
-                        <img src="<?php echo htmlspecialchars($user['userImg']); ?>" class="card-img-top"
-                            alt="<?php echo htmlspecialchars($user['userName']); ?>">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
-                            <p class="card-text">This user has participated in
-                                <?php echo htmlspecialchars($user['userNoOfEvents']); ?> events.</p>
-                            <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card">
+                            <img src="uploads/<?php echo htmlspecialchars($user['userImg']); ?>" class="card-img-top"
+                                alt="<?php echo htmlspecialchars($user['userName']); ?>">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
+                                <p class="card-text">participated
+                                    <?php echo htmlspecialchars($user['userNoOfEvents']); ?> events.
+                                </p>
+                                <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>

@@ -24,13 +24,15 @@ if (isset($_GET['event_id'])) {
     exit; // Stop execution if event ID not provided
 }
 
-// Close the database connection
-mysqli_close($con);
+// Check if user has already participated
+$user_id = $_SESSION['ID'];
+$sql_check_participation = "SELECT * FROM participation WHERE userID = $user_id AND eventID = $event_id";
+$result_check_participation = mysqli_query($con, $sql_check_participation);
+$already_participated = mysqli_num_rows($result_check_participation) > 0;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <?php include_once ('includes/header.php'); ?>
 
 <body>
@@ -58,6 +60,8 @@ mysqli_close($con);
                 <div class="card mt-5">
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
+                        <img src="uploads/<?php echo htmlspecialchars($event['eventImg']); ?>" class="card-img-top mb-3"
+                            alt="Event Photo">
                         <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
                         <ul class="list-group list-group-flush text-start">
                             <li class="list-group-item">Start Date:
@@ -76,8 +80,18 @@ mysqli_close($con);
                         </ul>
                         <div class="mt-3">
                             <a href="javascript:history.back()" class="btn btn-secondary me-2">Go Back</a>
-                            <a href="" onclick=participate() class="btn btn-primary">Participate</a>
+                            <?php if ($already_participated): ?>
+                                <button class="btn btn-primary" disabled>Already Participated</button>
+                            <?php elseif ($_SESSION['Role'] != 'organization'): ?>
+                                <?php if ($event['eventConfirm'] >= $event['eventNeed']): ?>
+                                    <button class="btn btn-primary" disabled>Event Full</button>
+                                <?php else: ?>
+                                    <a href="#" onclick="participate()" class="btn btn-primary">Participate</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -100,32 +114,65 @@ mysqli_close($con);
     <script src="js/main.js"></script>
 
     <!-- Initialize Owl Carousel -->
-
     <script>
         function participate() {
             var event_id = <?php echo $event_id; ?>;
             var user_id = <?php echo $_SESSION['ID']; ?>;
             var event_need = <?php echo $event['eventNeed']; ?>;
             var event_confirm = <?php echo $event['eventConfirm']; ?>;
-            var event_confirm = event_confirm + 1;
+            event_confirm = event_confirm + 1;
+
             if (event_confirm > event_need) {
-                alert("Event is full. Please try another event.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Event is full. Please try another event.',
+                });
                 return;
             }
-            $.ajax({
-                type: "POST",
-                url: "participate.php",
-                data: {
-                    event_id: event_id,
-                    user_id: user_id
-                },
-                success: function (response) {
-                    if (response == "success") {
-                        alert("Participation successful");
-                        window.location.href = "events.php";
-                    } else {
-                        alert("Participation failed");
-                    }
+
+            Swal.fire({
+                title: 'Confirm Participation',
+                text: 'Are you sure you want to participate in this event?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, participate',
+                cancelButtonText: 'No, cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "participate.php",
+                        data: {
+                            event_id: event_id,
+                            user_id: user_id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: 'Participation successful',
+                                }).then((result) => {
+                                    if (result.isConfirmed || result.isDismissed) {
+                                        window.location.href = "event-details.php?event_id=" + event_id;
+                                    }
+                                });
+                            } else if (response == "already_participated") {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Oops...',
+                                    text: 'You have already participated in this event.',
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Participation failed. Please try again later.',
+                                });
+                            }
+                        }
+                    });
                 }
             });
         }
@@ -135,5 +182,5 @@ mysqli_close($con);
 </html>
 
 <?php
-$conn->close();
+mysqli_close($con);
 ?>

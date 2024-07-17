@@ -102,7 +102,7 @@ mysqli_close($con);
                         </div>
                         <div class="card-body p-5">
                             <div class="text-center mb-4">
-                                <img src="<?php echo htmlspecialchars($details['userImg']); ?>" alt="User Image"
+                                <img src="uploads/<?php echo htmlspecialchars($details['userImg']); ?>" alt="User Image"
                                     class="rounded-circle" width="150" height="150">
                             </div>
 
@@ -145,7 +145,7 @@ mysqli_close($con);
                         </div>
                         <div class="card-body p-5">
                             <div class="text-center mb-4">
-                                <img src="<?php echo htmlspecialchars($details['orgImg']); ?>" alt="User Image"
+                                <img src="uploads/<?php echo htmlspecialchars($details['orgImg']); ?>" alt="User Image"
                                     class="rounded-circle" width="150" height="150">
                             </div>
                             <div class="row mb-3 text-center">

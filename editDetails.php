@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userNIC = $_POST['userNIC'];
         $userContact = $_POST['userContact'];
 
-        $updateQuery = "UPDATE user SET userName='$userName', userEmail='$userEmail', userAddress='$userAddress', userNIC='$userNIC', userContact='$userContact' WHERE userID='$userID'";
+        $updateQuery = "UPDATE user SET userName='$userName', userEmail='$userEmail', userAddress='$userAddress', userNIC='$userNIC', userContact='$userContact' WHERE userID='$ID'";
 
     } else if ($role == 'organization') {
         $orgRegNo = $_POST['orgRegNo'];
@@ -110,72 +110,72 @@ mysqli_close($con);
                         </div>
                         <div class="card-body p-5">
                             <?php if ($role == 'volunteer') { ?>
-                            <form method="POST" action="">
-                                <div class="form-group mb-3">
-                                    <label for="userName">Name</label>
-                                    <input type="text" class="form-control" id="userName" name="userName"
-                                        value="<?php echo htmlspecialchars($result['userName']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="userEmail">Email</label>
-                                    <input type="email" class="form-control" id="userEmail" name="userEmail"
-                                        value="<?php echo htmlspecialchars($result['userEmail']); ?>" required readonly>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="userAddress">Address</label>
-                                    <input type="text" class="form-control" id="userAddress" name="userAddress"
-                                        value="<?php echo htmlspecialchars($result['userAddress']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="userNIC">NIC</label>
-                                    <input type="text" class="form-control" id="userNIC" name="userNIC"
-                                        value="<?php echo htmlspecialchars($result['userNIC']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="userContact">Contact</label>
-                                    <input type="text" class="form-control" id="userContact" name="userContact"
-                                        value="<?php echo htmlspecialchars($result['userContact']); ?>" required>
-                                </div>
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
+                                <form method="POST" action="">
+                                    <div class="form-group mb-3">
+                                        <label for="userName">Name</label>
+                                        <input type="text" class="form-control" id="userName" name="userName"
+                                            value="<?php echo htmlspecialchars($result['userName']); ?>" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="userEmail">Email</label>
+                                        <input type="email" class="form-control" id="userEmail" name="userEmail"
+                                            value="<?php echo htmlspecialchars($result['userEmail']); ?>" required readonly>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="userAddress">Address</label>
+                                        <input type="text" class="form-control" id="userAddress" name="userAddress"
+                                            value="<?php echo htmlspecialchars($result['userAddress']); ?>" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="userNIC">NIC</label>
+                                        <input type="text" class="form-control" id="userNIC" name="userNIC"
+                                            value="<?php echo htmlspecialchars($result['userNIC']); ?>" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="userContact">Contact</label>
+                                        <input type="text" class="form-control" id="userContact" name="userContact"
+                                            value="<?php echo htmlspecialchars($result['userContact']); ?>" required>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
                             <?php } else if ($role == 'organization') { ?>
-                            <form method="POST" action="">
-                                <div class="form-group mb-3">
-                                    <label for="orgNIC">Registration No.</label>
-                                    <input type="text" class="form-control" id="orgRegNo" name="orgRegNo"
-                                        value="<?php echo htmlspecialchars($result['orgRegNo']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="orgName">Name</label>
-                                    <input type="text" class="form-control" id="orgName" name="orgName"
-                                        value="<?php echo htmlspecialchars($result['orgName']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="orgEmail">Email</label>
-                                    <input type="email" class="form-control" id="orgEmail" name="orgEmail"
-                                        value="<?php echo htmlspecialchars($result['orgEmail']); ?>" required readonly>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="orgAddress">Address</label>
-                                    <input type="text" class="form-control" id="orgAddress" name="orgAddress"
-                                        value="<?php echo htmlspecialchars($result['orgAddress']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="orgContact">Contact</label>
-                                    <input type="text" class="form-control" id="orgContact" name="orgContact"
-                                        value="<?php echo htmlspecialchars($result['orgContact']); ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="orgDesc">Description</label>
-                                    <input type="text" class="form-control" id="orgDesc" name="orgDesc"
-                                        value="<?php echo htmlspecialchars($result['orgDesc']); ?>" required>
-                                </div>
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
+                                    <form method="POST" action="">
+                                        <div class="form-group mb-3">
+                                            <label for="orgNIC">Registration No.</label>
+                                            <input type="text" class="form-control" id="orgRegNo" name="orgRegNo"
+                                                value="<?php echo htmlspecialchars($result['orgRegNo']); ?>" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="orgName">Name</label>
+                                            <input type="text" class="form-control" id="orgName" name="orgName"
+                                                value="<?php echo htmlspecialchars($result['orgName']); ?>" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="orgEmail">Email</label>
+                                            <input type="email" class="form-control" id="orgEmail" name="orgEmail"
+                                                value="<?php echo htmlspecialchars($result['orgEmail']); ?>" required readonly>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="orgAddress">Address</label>
+                                            <input type="text" class="form-control" id="orgAddress" name="orgAddress"
+                                                value="<?php echo htmlspecialchars($result['orgAddress']); ?>" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="orgContact">Contact</label>
+                                            <input type="text" class="form-control" id="orgContact" name="orgContact"
+                                                value="<?php echo htmlspecialchars($result['orgContact']); ?>" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="orgDesc">Description</label>
+                                            <input type="text" class="form-control" id="orgDesc" name="orgDesc"
+                                                value="<?php echo htmlspecialchars($result['orgDesc']); ?>" required>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
                             <?php } ?>
 
                         </div>

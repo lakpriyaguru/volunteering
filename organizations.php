@@ -11,13 +11,24 @@ if (mysqli_connect_errno()) {
 // Fetch event data
 $sql = "SELECT * FROM organization";
 $result = mysqli_query($con, $sql);
-$events = [];
+$organizations = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $organizations[] = $row;
     }
 } else {
-    echo "No organizations found";
+    echo "<script>
+            document.addEventListener('DOMContentLoaded', function(event) {
+                Swal.fire({
+                    title: 'No Organizations Found!',
+                    text: 'There are no organizations available at the moment.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                }).then(function() {
+                    window.location = 'index.php';
+                });
+            });
+        </script>";
 }
 
 // Close the database connection
@@ -54,8 +65,8 @@ mysqli_close($con);
                 <?php foreach ($organizations as $organization): ?>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="card">
-                            <img src="img/org.jpg" class="card-img-top mx-auto"
-                                alt="<?php echo htmlspecialchars($organization['orgName']); ?>"
+                            <img src="uploads/<?php echo htmlspecialchars($organization['orgImg']); ?>"
+                                class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($organization['orgName']); ?>"
                                 style="width: 75%; height: 75%;" />
 
                             <div class="card-body text-center">

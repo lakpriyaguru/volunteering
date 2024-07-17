@@ -62,55 +62,6 @@ mysqli_close($con);
         </div>
     </div>
     <!-- Page Header End -->
-
-    <!-- Events List Start -->
-    <!-- <div class="container-xxl py-5">
-        <div class="container">
-            <div class="owl-carousel event-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <?php foreach ($events as $event):
-                    $percentage = round(($event['eventConfirm'] / $event['eventNeed']) * 100);
-                    ?>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
-                        <div class="causes-press bg-light p-3 pt-2">
-                            <div class="d-flex justify-content-between">
-                                <p class="text-dark">
-                                    <?php echo htmlspecialchars($event['eventNeed']); ?> <small
-                                        class="text-body">Needed</small>
-                                </p>
-                                <p class="text-dark">
-                                    <?php echo htmlspecialchars($event['eventConfirm']); ?> <small
-                                        class="text-body">Confirmed</small>
-                                </p>
-                            </div>
-
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar"
-                                    aria-valuenow="<?php echo htmlspecialchars($event['eventConfirm']); ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="<?php echo htmlspecialchars($event['eventNeed']); ?>"
-                                    style="width: <?php echo $percentage; ?>%;">
-                                    <span><?php echo $percentage; ?>%</span>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <a href="event-details.php?event_id=<?php echo htmlspecialchars($event['eventID']); ?>"
-                            class="btn btn-primary">More Details</a>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div> -->
-
-
-
-
-
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5 justify-content-center">
@@ -120,8 +71,8 @@ mysqli_close($con);
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="card d-flex justify-content-center">
                             <!-- Added justify-content-center class -->
-                            <img src="img/carousel-2.jpg" class="card-img-top mx-auto"
-                                alt="<?php echo htmlspecialchars($event['eventName']); ?>"
+                            <img src="uploads/<?php echo htmlspecialchars($event['eventImg']); ?>"
+                                class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($event['eventName']); ?>"
                                 style="width: 75%; height: 75%;" />
 
                             <div class="card-body text-center">

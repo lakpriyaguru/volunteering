@@ -58,14 +58,108 @@ if (isset($_POST['add_event'])) {
     $eventNeed = $_POST['eventNeed'];
     $eventApproval = 'Pending';
 
-    $insertQuery = "INSERT INTO event (eventName, eventDesc, eventStart, eventEnd, eventNeed, orgID, eventApproval) VALUES ('$eventName', '$eventDesc', '$eventStart', '$eventEnd', '$eventNeed', '$ID', '$eventApproval')";
+    // Handle file upload
+    if (isset($_FILES['eventPhoto']) && $_FILES['eventPhoto']['error'] === UPLOAD_ERR_OK) {
+        $eventPhoto = $_FILES['eventPhoto'];
+        $photoName = $eventPhoto['name'];
+        $photoTmpName = $eventPhoto['tmp_name'];
+        $photoSize = $eventPhoto['size'];
+        $photoError = $eventPhoto['error'];
+        $photoType = $eventPhoto['type'];
 
-    if (mysqli_query($con, $insertQuery)) {
+        $photoExt = explode('.', $photoName);
+        $photoActualExt = strtolower(end($photoExt));
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if (in_array($photoActualExt, $allowed)) {
+            if ($photoSize < 5000000) { // 5MB limit
+                $photoNewName = uniqid('', true) . "." . $photoActualExt;
+                $photoDestination = 'uploads/' . $photoNewName;
+                move_uploaded_file($photoTmpName, $photoDestination);
+
+                $insertQuery = "INSERT INTO event (eventName, eventDesc, eventStart, eventEnd, eventNeed, orgID, eventApproval, eventImg) VALUES ('$eventName', '$eventDesc', '$eventStart', '$eventEnd', '$eventNeed', '$ID', '$eventApproval', '$photoNewName')";
+
+                if (mysqli_query($con, $insertQuery)) {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function(event) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'The event has been added.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(function() {
+                                window.location = 'orgEvent.php';
+                            });
+                        });
+                    </script>";
+                } else {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function(event) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an error adding the event.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    </script>";
+                }
+            } else {
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function(event) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Your file is too large.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>";
+            }
+        } else {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function(event) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'You cannot upload files of this type.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            </script>";
+        }
+    } else {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function(event) {
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'The event has been added.',
+                    title: 'Error!',
+                    text: 'There was an error uploading your file.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>";
+    }
+}
+
+// Handle edit event
+if (isset($_POST['edit_event'])) {
+    $eventID = $_POST['eventID'];
+    $eventName = $_POST['eventName'];
+    $eventDesc = $_POST['eventDesc'];
+    $eventStart = $_POST['eventStart'];
+    $eventEnd = $_POST['eventEnd'];
+    $eventNeed = $_POST['eventNeed'];
+    $eventApproval = 'Pending';
+
+    $updateQuery = "UPDATE event SET eventName='$eventName', eventDesc='$eventDesc', eventStart='$eventStart', eventEnd='$eventEnd', eventNeed='$eventNeed', eventApproval='$eventApproval' WHERE eventID='$eventID'";
+
+    if (mysqli_query($con, $updateQuery)) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function(event) {
+                Swal.fire({
+                    title: 'Updated!',
+                    text: 'The event has been updated.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(function() {
@@ -78,7 +172,7 @@ if (isset($_POST['add_event'])) {
             document.addEventListener('DOMContentLoaded', function(event) {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'There was an error adding the event.',
+                    text: 'There was an error updating the event.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
@@ -86,6 +180,7 @@ if (isset($_POST['add_event'])) {
         </script>";
     }
 }
+
 
 // Close the database connection
 mysqli_close($con);
@@ -147,14 +242,17 @@ mysqli_close($con);
                                                 </td>
                                                 <td><?php echo htmlspecialchars($event['eventApproval']); ?></td>
                                                 <td>
-                                                    <a href="view_event.php?eventID=<?php echo $event['eventID']; ?>"
+                                                    <a href="orgViewEvent.php?eventID=<?php echo $event['eventID']; ?>"
                                                         class="btn btn-info btn-sm">View</a>
-                                                    <a href="edit_event.php?eventID=<?php echo $event['eventID']; ?>"
-                                                        class="btn btn-warning btn-sm">Edit</a>
                                                     <a href="javascript:void(0);"
-                                                        onclick="confirmDelete(<?php echo $event['eventID']; ?>)"
+                                                        onclick="openEditModal(<?php echo $event['eventID']; ?>, '<?php echo htmlspecialchars(addslashes($event['eventName'])); ?>', '<?php echo htmlspecialchars(addslashes($event['eventDesc'])); ?>', '<?php echo htmlspecialchars($event['eventStart']); ?>', '<?php echo htmlspecialchars($event['eventEnd']); ?>', '<?php echo htmlspecialchars($event['eventNeed']); ?>')"
+                                                        class="btn btn-primary btn-sm">Edit</a>
+                                                    <a href="javascript:void(0);"
+                                                        onclick="confirmDelete(<?php echo $event['eventID']; ?>);"
                                                         class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
+
+
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -182,7 +280,7 @@ mysqli_close($con);
                     <h5 class="modal-title" id="addEventModalLabel">Add New Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="orgEvent.php">
+                <form method="POST" action="orgEvent.php" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="eventName" class="form-label">Event Name</label>
@@ -205,16 +303,67 @@ mysqli_close($con);
                             <label for="eventNeed" class="form-label">Volunteer Count Needed</label>
                             <input type="number" class="form-control" id="eventNeed" name="eventNeed" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="eventPhoto" class="form-label">Event Photo</label>
+                            <input type="file" class="form-control" id="eventPhoto" name="eventPhoto" accept="image/*"
+                                required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" name="add_event" class="btn btn-primary">Add Event</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
     <!-- Add Event Modal End -->
+
+    <!-- Edit Event Modal Start -->
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="orgEvent.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editEventID" name="eventID">
+                        <div class="mb-3">
+                            <label for="editEventName" class="form-label">Event Name</label>
+                            <input type="text" class="form-control" id="editEventName" name="eventName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEventDesc" class="form-label">Event Description</label>
+                            <textarea class="form-control" id="editEventDesc" name="eventDesc" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEventStart" class="form-label">Event Start Date</label>
+                            <input type="datetime-local" class="form-control" id="editEventStart" name="eventStart"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEventEnd" class="form-label">Event End Date</label>
+                            <input type="datetime-local" class="form-control" id="editEventEnd" name="eventEnd"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEventNeed" class="form-label">Number of Volunteers Needed</label>
+                            <input type="number" class="form-control" id="editEventNeed" name="eventNeed" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="edit_event" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Event Modal End -->
 
     <?php include_once ('includes/footer.php'); ?>
 
@@ -245,6 +394,37 @@ mysqli_close($con);
             });
         }
     </script>
+
+    <script>
+        function openEditModal(eventID, eventName, eventDesc, eventStart, eventEnd, eventNeed) {
+            document.getElementById('editEventID').value = eventID;
+            document.getElementById('editEventName').value = eventName;
+            document.getElementById('editEventDesc').value = eventDesc;
+            document.getElementById('editEventStart').value = eventStart;
+            document.getElementById('editEventEnd').value = eventEnd;
+            document.getElementById('editEventNeed').value = eventNeed;
+            var editEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+            editEventModal.show();
+        }
+    </script>
+
+    <script>
+        function confirmDelete(eventID) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you really want to delete this event?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'orgEvent.php?delete=' + eventID;
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>

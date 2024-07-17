@@ -14,35 +14,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userContactNo = mysqli_real_escape_string($con, $_POST['userContactNo']);
         $userAddress = mysqli_real_escape_string($con, $_POST['userAddress']);
 
-        $query = "INSERT INTO user(userName, userNIC, userEmail, userPassword, userContact, userAddress) VALUES ('$userName', '$userNIC', '$userEmail', '$userPassword', '$userContactNo', '$userAddress')";
-        $result = mysqli_query($con, $query);
-        if ($result) {
-            echo "<script>
-            document.addEventListener('DOMContentLoaded', function(event) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'You have successfully signed up as a volunteer. Please login to continue.',
-                    icon: 'success',
-                    delay: 2000
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'login.php';
+        // Handle profile photo upload for volunteer
+        if (isset($_FILES['userPhoto']) && $_FILES['userPhoto']['error'] === UPLOAD_ERR_OK) {
+            $profilePhoto = $_FILES['userPhoto'];
+            $photoName = $profilePhoto['name'];
+            $photoTmpName = $profilePhoto['tmp_name'];
+            $photoSize = $profilePhoto['size'];
+            $photoError = $profilePhoto['error'];
+            $photoType = $profilePhoto['type'];
+
+            $photoExt = explode('.', $photoName);
+            $photoActualExt = strtolower(end($photoExt));
+            $allowed = array('jpg', 'jpeg', 'png');
+
+            if (in_array($photoActualExt, $allowed)) {
+                if ($photoSize < 5000000) { // 5MB limit
+                    $photoNewName = uniqid('', true) . "." . $photoActualExt;
+                    $photoDestination = 'uploads/' . $photoNewName;
+
+                    if (move_uploaded_file($photoTmpName, $photoDestination)) {
+                        // File uploaded successfully, proceed with user insertion
+                        $query = "INSERT INTO user(userName, userNIC, userEmail, userPassword, userContact, userAddress, userImg) VALUES ('$userName', '$userNIC', '$userEmail', '$userPassword', '$userContactNo', '$userAddress', '$photoNewName')";
+                        $result = mysqli_query($con, $query);
+
+                        if ($result) {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function(event) {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'You have successfully signed up as a volunteer. Please login to continue.',
+                                        icon: 'success',
+                                        delay: 2000
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = 'login.php';
+                                        }
+                                    })
+                                });
+                            </script>";
+                        } else {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function(event) {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Something went wrong. Please try again.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                });
+                            </script>";
+                        }
+                    } else {
+                        echo "<script>
+                            document.addEventListener('DOMContentLoaded', function(event) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an error uploading your file.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        </script>";
                     }
-                })
-            });
-        </script>";
+                } else {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function(event) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Your file is too large.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    </script>";
+                }
+            } else {
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function(event) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'You cannot upload files of this type.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>";
+            }
         } else {
             echo "<script>
-            document.addEventListener('DOMContentLoaded', function(event) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+                document.addEventListener('DOMContentLoaded', function(event) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please upload a file.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
-            });
-        </script>";
+            </script>";
         }
+
     } else if ($userType == 'organization') {
         $orgName = mysqli_real_escape_string($con, $_POST['orgName']);
         $orgRegNo = mysqli_real_escape_string($con, $_POST['orgRegNo']);
@@ -52,34 +122,103 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $orgAddress = mysqli_real_escape_string($con, $_POST['orgAddress']);
         $orgDesc = mysqli_real_escape_string($con, $_POST['orgDesc']);
 
-        $query = "INSERT INTO organization(orgName, orgRegNo, orgEmail, orgPassword, orgContact, orgAddress, orgDesc) VALUES('$orgName', '$orgRegNo', '$orgEmail', '$orgPassword', '$orgPhone', '$orgAddress', '$orgDesc')";
-        $result = mysqli_query($con, $query);
-        if ($result) {
-            echo "<script>
-            document.addEventListener('DOMContentLoaded', function(event) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'You have successfully signed up as an organization. Please login to continue.',
-                    icon: 'success',
-                    delay: 2000
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'login.php';
+        // Handle company logo upload for organization
+        if (isset($_FILES['orgLogo']) && $_FILES['orgLogo']['error'] === UPLOAD_ERR_OK) {
+            $companyLogo = $_FILES['orgLogo'];
+            $logoName = $companyLogo['name'];
+            $logoTmpName = $companyLogo['tmp_name'];
+            $logoSize = $companyLogo['size'];
+            $logoError = $companyLogo['error'];
+            $logoType = $companyLogo['type'];
+
+            $logoExt = explode('.', $logoName);
+            $logoActualExt = strtolower(end($logoExt));
+            $allowed = array('jpg', 'jpeg', 'png');
+
+            if (in_array($logoActualExt, $allowed)) {
+                if ($logoSize < 5000000) { // 5MB limit
+                    $logoNewName = uniqid('', true) . "." . $logoActualExt;
+                    $logoDestination = 'uploads/' . $logoNewName;
+
+                    if (move_uploaded_file($logoTmpName, $logoDestination)) {
+                        // File uploaded successfully, proceed with organization insertion
+                        $query = "INSERT INTO organization(orgName, orgRegNo, orgEmail, orgPassword, orgContact, orgAddress, orgDesc, orgImg) VALUES('$orgName', '$orgRegNo', '$orgEmail', '$orgPassword', '$orgPhone', '$orgAddress', '$orgDesc', '$logoNewName')";
+                        $result = mysqli_query($con, $query);
+
+                        if ($result) {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function(event) {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'You have successfully signed up as an organization. Please login to continue.',
+                                        icon: 'success',
+                                        delay: 2000
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = 'login.php';
+                                        }
+                                    })
+                                });
+                            </script>";
+                        } else {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function(event) {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Something went wrong. Please try again.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                });
+                            </script>";
+                        }
+                    } else {
+                        echo "<script>
+                            document.addEventListener('DOMContentLoaded', function(event) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an error uploading your file.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        </script>";
                     }
-                })
-            });
-        </script>";
+                } else {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function(event) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Your file is too large.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    </script>";
+                }
+            } else {
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function(event) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'You cannot upload files of this type.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>";
+            }
         } else {
             echo "<script>
-            document.addEventListener('DOMContentLoaded', function(event) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+                document.addEventListener('DOMContentLoaded', function(event) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please upload a file.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
-            });
-        </script>";
+            </script>";
         }
     }
 }
@@ -87,6 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close the database connection
 mysqli_close($con);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +268,7 @@ mysqli_close($con);
                             </select>
                         </div>
                         <div id="volunteerForm">
-                            <form id="signupForm" method="post" action="">
+                            <form id="signupForm" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="userType" value="volunteer">
                                 <div class="mb-3">
                                     <label for="userName" class="form-label">Full Name</label>
@@ -158,6 +298,11 @@ mysqli_close($con);
                                     <input type="text" class="form-control" id="userAddress" name="userAddress"
                                         required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="userPhoto" class="form-label">Profile Picture</label>
+                                    <input type="file" class="form-control" id="userPhoto" name="userPhoto"
+                                        accept="image/*">
+                                </div>
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary py-2" name="signup">Sign Up as
                                         Volunteer</button>
@@ -166,7 +311,7 @@ mysqli_close($con);
                         </div>
 
                         <div id="organizationForm" style="display: none;">
-                            <form id="signupForm" method="post" action="">
+                            <form id="signupForm" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="userType" value="organization">
                                 <div class="mb-3">
                                     <label for="orgName" class="form-label">Organization Name</label>
@@ -198,6 +343,11 @@ mysqli_close($con);
                                     <label for="orgDesc" class="form-label">About the Organization</label>
                                     <input type="text" class="form-control" id="orgDesc" name="orgDesc" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="orgLogo" class="form-label">Organization Logo</label>
+                                    <input type="file" class="form-control" id="orgLogo" name="orgLogo"
+                                        accept="image/*">
+                                </div>
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary py-2" name="signup">Sign Up as
                                         Organization</button>
@@ -228,53 +378,53 @@ mysqli_close($con);
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        function showForm() {
-            var userType = document.getElementById("userType").value;
-            if (userType === "volunteer") {
-                document.getElementById("volunteerForm").style.display = "block";
-                document.getElementById("organizationForm").style.display = "none";
-            } else {
-                document.getElementById("volunteerForm").style.display = "none";
-                document.getElementById("organizationForm").style.display = "block";
-            }
+    function showForm() {
+        var userType = document.getElementById("userType").value;
+        if (userType === "volunteer") {
+            document.getElementById("volunteerForm").style.display = "block";
+            document.getElementById("organizationForm").style.display = "none";
+        } else {
+            document.getElementById("volunteerForm").style.display = "none";
+            document.getElementById("organizationForm").style.display = "block";
         }
+    }
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('#userEmail, #orgEmail').on('blur', function () {
-                var email = $(this).val();
-                var userType = $('#userType').val();
-                var errorSpan = userType === 'volunteer' ? '#userEmailError' : '#orgEmailError';
-                var submitButton = userType === 'volunteer' ? '#volunteerForm button[type="submit"]' :
-                    '#organizationForm button[type="submit"]';
+    $(document).ready(function() {
+        $('#userEmail, #orgEmail').on('blur', function() {
+            var email = $(this).val();
+            var userType = $('#userType').val();
+            var errorSpan = userType === 'volunteer' ? '#userEmailError' : '#orgEmailError';
+            var submitButton = userType === 'volunteer' ? '#volunteerForm button[type="submit"]' :
+                '#organizationForm button[type="submit"]';
 
-                if (email) {
-                    $.ajax({
-                        url: 'check_email.php',
-                        type: 'POST',
-                        data: {
-                            email: email,
-                            userType: userType
-                        },
-                        success: function (response) {
-                            if (response == 'exists') {
-                                $(errorSpan).text(
-                                    'Email already registered. Please use a different email.'
-                                );
-                                $(submitButton).prop('disabled', true);
-                            } else {
-                                $(errorSpan).text('');
-                                $(submitButton).prop('disabled', false);
-                            }
+            if (email) {
+                $.ajax({
+                    url: 'check_email.php',
+                    type: 'POST',
+                    data: {
+                        email: email,
+                        userType: userType
+                    },
+                    success: function(response) {
+                        if (response == 'exists') {
+                            $(errorSpan).text(
+                                'Email already registered. Please use a different email.'
+                            );
+                            $(submitButton).prop('disabled', true);
+                        } else {
+                            $(errorSpan).text('');
+                            $(submitButton).prop('disabled', false);
                         }
-                    });
-                } else {
-                    $(errorSpan).text('');
-                    $(submitButton).prop('disabled', false);
-                }
-            });
+                    }
+                });
+            } else {
+                $(errorSpan).text('');
+                $(submitButton).prop('disabled', false);
+            }
         });
+    });
     </script>
 
 
