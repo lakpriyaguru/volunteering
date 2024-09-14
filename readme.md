@@ -30,7 +30,7 @@ A 3<sup>rd</sup> year undergraduate CS project under the CMIS 3224: Web Designin
 
 ### Documentation :
 
-| Document Name         | Submitted Date          |
-| --------------------- | ----------------------- |
+| Document Name                                                                                                                                 | Submitted Date          |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
 | [Progress Presentation](https://github.com/lakpriyaguru/volunteering/blob/master/docs/Group_08_CMIS3224_Project_Progress_Presentation_v2.pdf) | 10th of June, 2024      |
-| [Final Presentation](https://github.com/lakpriyaguru/volunteering/blob/master/docs/Group_08_CMIS3224_Project_Presentation.pdf)    | 14th of September, 2024 |
+| [Final Presentation](https://github.com/lakpriyaguru/volunteering/blob/master/docs/Group_08_CMIS3224_Project_Presentation.pdf)                | 14th of September, 2024 |
