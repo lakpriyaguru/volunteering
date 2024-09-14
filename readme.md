@@ -30,7 +30,7 @@ A 3<sup>rd</sup> year undergraduate CS project under the CMIS 3224: Web Designin
 
 ### Documentation :
 
-| Document Name         | Submitted Date      |
-| --------------------- | ------------------- |
-| Progress Presentation | 04th of March, 2024 |
-| Final Presentation    | 04th of March, 2024 |
+| Document Name         | Submitted Date          |
+| --------------------- | ----------------------- |
+| Progress Presentation | 10th of June, 2024      |
+| Final Presentation    | 14th of September, 2024 |
