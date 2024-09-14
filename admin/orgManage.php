@@ -159,11 +159,11 @@ if (strlen($_SESSION['adminID']) == 0) {
                                                                 class="fas fa-trash-alt"
                                                                 aria-hidden="true"></i></button>
 
-                                                        <a href="orgResetPwd.php?said=<?php echo $result['orgID']; ?>"
+                                                        <!-- <a href="orgResetPwd.php?said=<?php echo $result['orgID']; ?>"
                                                             title="Reset Organization Password">
                                                             <button style="color:blue;"
                                                                 title="Reset Organization Password"><i class="fa fa-key"
-                                                                    aria-hidden="true"></i></button>
+                                                                    aria-hidden="true"></i></button></a> -->
                                                     </th>
                                                 </tr>
                                                 <?php

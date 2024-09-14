@@ -64,19 +64,21 @@ mysqli_close($con);
         <div class="container">
             <div class="row g-5 justify-content-center">
                 <?php foreach ($users as $user): ?>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card">
-                            <img src="uploads/<?php echo htmlspecialchars($user['userImg']); ?>" class="card-img-top"
-                                alt="<?php echo htmlspecialchars($user['userName']); ?>">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
-                                <p class="card-text">participated
-                                    <?php echo htmlspecialchars($user['userNoOfEvents']); ?> events.
-                                </p>
-                                <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
-                            </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card">
+                        <img src="uploads/<?php echo htmlspecialchars($user['userImg']); ?>" class="card-img-top"
+                            alt="<?php echo htmlspecialchars($user['userName']); ?>"
+                            style="width: 75%; height: 75%; display: block; margin: 0 auto;">
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($user['userName']); ?></h5>
+                            <p class="card-text">participated
+                                <?php echo htmlspecialchars($user['userNoOfEvents']); ?> events.
+                            </p>
+                            <!-- <?php echo htmlspecialchars($user['eventParticipated']); ?> -->
                         </div>
                     </div>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>

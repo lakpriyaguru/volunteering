@@ -68,44 +68,44 @@ mysqli_close($con);
                 <?php foreach ($events as $event):
                     $percentage = round(($event['eventConfirm'] / $event['eventNeed']) * 100);
                     ?>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card d-flex justify-content-center">
-                            <!-- Added justify-content-center class -->
-                            <img src="uploads/<?php echo htmlspecialchars($event['eventImg']); ?>"
-                                class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($event['eventName']); ?>"
-                                style="width: 75%; height: 75%;" />
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card d-flex justify-content-center">
+                        <!-- Added justify-content-center class -->
+                        <img src="uploads/<?php echo htmlspecialchars($event['eventImg']); ?>"
+                            class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($event['eventName']); ?>"
+                            style="width: 75%; height: 75%;" />
 
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
-                                <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
-                                <div class="causes-press bg-light p-3 pt-2">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="text-dark">
-                                            <?php echo htmlspecialchars($event['eventNeed']); ?> <small
-                                                class="text-body">Needed</small>
-                                        </p>
-                                        <p class="text-dark">
-                                            <?php echo htmlspecialchars($event['eventConfirm']); ?> <small
-                                                class="text-body">Confirmed</small>
-                                        </p>
-                                    </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($event['eventName']); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($event['eventDesc']); ?></p>
+                            <div class="causes-press bg-light p-3 pt-2">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-dark">
+                                        <?php echo htmlspecialchars($event['eventNeed']); ?> <small
+                                            class="text-body">Needed</small>
+                                    </p>
+                                    <p class="text-dark">
+                                        <?php echo htmlspecialchars($event['eventConfirm']); ?> <small
+                                            class="text-body">Confirmed</small>
+                                    </p>
+                                </div>
 
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar"
-                                            aria-valuenow="<?php echo htmlspecialchars($event['eventConfirm']); ?>"
-                                            aria-valuemin="0"
-                                            aria-valuemax="<?php echo htmlspecialchars($event['eventNeed']); ?>"
-                                            style="width: <?php echo $percentage; ?>%;">
-                                            <span><?php echo $percentage; ?>%</span>
-                                        </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"
+                                        aria-valuenow="<?php echo htmlspecialchars($event['eventConfirm']); ?>"
+                                        aria-valuemin="0"
+                                        aria-valuemax="<?php echo htmlspecialchars($event['eventNeed']); ?>"
+                                        style="width: <?php echo $percentage; ?>%;">
+                                        <span><?php echo $percentage; ?>%</span>
                                     </div>
                                 </div>
-                                <a href="event-details.php?event_id=<?php echo htmlspecialchars($event['eventID']); ?>"
-                                    class="btn btn-primary">More Details</a>
                             </div>
-
+                            <a href="event-details.php?event_id=<?php echo htmlspecialchars($event['eventID']); ?>"
+                                class="btn btn-primary">More Details</a>
                         </div>
+
                     </div>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -129,31 +129,31 @@ mysqli_close($con);
 
     <!-- Initialize Owl Carousel -->
     <script>
-        $(document).ready(function () {
-            $('.event-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 3
-                    }
+    $(document).ready(function() {
+        $('.event-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
                 }
-            });
+            }
         });
+    });
     </script>
 </body>
 
 </html>
 
 <?php
-$conn->close();
+// $conn->close();
 ?>

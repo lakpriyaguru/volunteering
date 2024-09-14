@@ -121,7 +121,7 @@ mysqli_close($con);
                                 </p>
                             </div>
                             <div class="text-center mt-4">
-                                <a class="btn btn-success">View Participated Events</a>
+                                <a href="userEvent.php" class="btn btn-success">Events</a>
                                 <a href="editDetails.php" class="btn btn-primary">Edit Details</a>
                                 <a class="btn btn-danger" onclick="deleteAcc()">Delete
                                     Account</a>

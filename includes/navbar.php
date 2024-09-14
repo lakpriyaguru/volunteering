@@ -4,16 +4,16 @@
         <div class="col-lg-6 px-5 text-start">
             <small><i class="fa fa-map-marker-alt me-2"></i>Faculty of Applied
                 Sciences, Wayamba University of Sri Lanka, Kuliyapitiya.
-                60200</small>
+                60200.</small>
             <small class="ms-4"><i class="fa fa-envelope me-2"></i>info@volunteering.com</small>
         </div>
-        <div class="col-lg-6 px-5 text-end">
+        <!-- <div class="col-lg-6 px-5 text-end">
             <small>Follow us:</small>
             <a class="text-white-50 ms-3" href=""><i class="fab fa-facebook-f"></i></a>
             <a class="text-white-50 ms-3" href=""><i class="fab fa-twitter"></i></a>
             <a class="text-white-50 ms-3" href=""><i class="fab fa-linkedin-in"></i></a>
             <a class="text-white-50 ms-3" href=""><i class="fab fa-instagram"></i></a>
-        </div>
+        </div> -->
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
@@ -31,8 +31,8 @@
                 <a href="events.php" class="nav-item nav-link">Events</a>
                 <a href="organizations.php" class="nav-item nav-link">Organizations</a>
                 <a href="volunteers.php" class="nav-item nav-link">Volunteers</a>
-                <a href="about.php" class="nav-item nav-link">About Us</a>
-                <a href="contact.php" class="nav-item nav-link">Contact Us</a>
+                <!-- <a href="about.php" class="nav-item nav-link">About Us</a> -->
+                <!-- <a href="contact.php" class="nav-item nav-link">Contact Us</a> -->
 
             </div>
             <?php

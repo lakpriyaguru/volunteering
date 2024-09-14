@@ -7,16 +7,17 @@
                     Volunteer<span class="text-white">ing</span>
                 </h1>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.
+                    Volunteering simplifies the recruitment, organization, and coordination of
+                    volunteers. It offers features for posting opportunities, scheduling shifts, tracking hours, and
+                    facilitating communication. With tools for onboarding and recognizing contributions, also ensures
+                    efficient and impactful volunteer management.
                 </p>
-                <div class="d-flex pt-2">
+                <!-- <div class="d-flex pt-2">
                     <a class="btn btn-square me-1" href=""><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-square me-1" href=""><i class="fab fa-facebook-f"></i></a>
                     <a class="btn btn-square me-1" href=""><i class="fab fa-youtube"></i></a>
                     <a class="btn btn-square me-0" href=""><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                </div> -->
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-light mb-4">Address</h5>
@@ -29,12 +30,12 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-light mb-4">Quick Links</h5>
-                <a class="btn btn-link" href="">Home</a>
-                <a class="btn btn-link" href="">Events</a>
-                <a class="btn btn-link" href="">Organizations</a>
-                <a class="btn btn-link" href="">Volunteers</a>
-                <a class="btn btn-link" href="">About Us</a>
-                <a class="btn btn-link" href="">Contact Us</a>
+                <a class="btn btn-link" href="index.php">Home</a>
+                <a class="btn btn-link" href="events.php">Events</a>
+                <a class="btn btn-link" href="organizations.php">Organizations</a>
+                <a class="btn btn-link" href="volunteers.php">Volunteers</a>
+                <!-- <a class="btn btn-link" href="">About Us</a> -->
+                <!-- <a class="btn btn-link" href="">Contact Us</a> -->
             </div>
             <!--div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Newsletter</h5>

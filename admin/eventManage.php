@@ -97,8 +97,6 @@ if (strlen($_SESSION['adminID']) == 0) {
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-
-
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Event Details</h3>
@@ -116,12 +114,12 @@ if (strlen($_SESSION['adminID']) == 0) {
                                                     <th>End Date & Time</th>
                                                     <th># of Volunteers Required</th>
                                                     <th># of Volunteers Registered</th>
-                                                    <th>Approved or Declined</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $query = mysqli_query($con, "SELECT e.*, (SELECT orgName FROM organization o WHERE e.orgID = o.orgID) AS orgName FROM event e;");
+                                                <?php $query = mysqli_query($con, "SELECT e.*, (SELECT orgName FROM organization o WHERE e.orgID = o.orgID) AS orgName FROM event e WHERE e.eventApproval != 'Pending';");
                                                     $cnt = 1;
                                                     while ($result = mysqli_fetch_array($query)) {
                                                         ?>
@@ -152,17 +150,7 @@ if (strlen($_SESSION['adminID']) == 0) {
                                                         <?php echo $result['eventConfirm'] ?>
                                                     </td>
                                                     <td>
-                                                        <?php
-                                                                if ($result['eventApproval'] == 0) {
-                                                                    echo "Waiting for approval";
-                                                                } elseif ($result['eventApproval'] == 1) {
-                                                                    echo "Approved";
-                                                                } elseif ($result['eventApproval'] == 2) {
-                                                                    echo "Declined";
-                                                                } else {
-                                                                    echo "Unknown status";
-                                                                }
-                                                                ?>
+                                                        <?php echo $result['eventApproval']?>
                                                     </td>
                                                     <th>
                                                         <a href="eventEdit.php?said=<?php echo $result['eventID']; ?>"

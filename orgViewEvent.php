@@ -29,6 +29,15 @@ mysqli_close($con);
 <html lang="en">
 
 <?php include_once ('includes/header.php'); ?>
+<style>
+.btn-disabled {
+    background-color: #d6d6d6;
+    border-color: #bcbcbc;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+</style>
+
 
 <body>
     <?php include_once ('includes/navbar.php'); ?>
@@ -56,23 +65,46 @@ mysqli_close($con);
                         <div class="card-header bg-primary text-white text-center py-4">
                             <h1 class="display-6 mb-0">Event Details</h1>
                         </div>
-                        <div class="card-body p-5">
+                        <div class="card-body p-5 text-center">
+                            <!-- Display the event image -->
+                            <div class="text-center mb-4">
+                                <img src="uploads/<?php echo htmlspecialchars($event['eventImg']); ?>"
+                                    class="card-img-top mb-3" alt="Event Photo" style="height: 50%; width: 50%;">
+                            </div>
+
+                            <!-- Rearranged event details -->
                             <h2><?php echo htmlspecialchars($event['eventName']); ?></h2>
-                            <p><strong>Description:</strong> <?php echo htmlspecialchars($event['eventDesc']); ?></p>
-                            <p><strong>Start:</strong> <?php echo htmlspecialchars($event['eventStart']); ?></p>
-                            <p><strong>End:</strong> <?php echo htmlspecialchars($event['eventEnd']); ?></p>
-                            <p><strong>Volunteer Count Needed:</strong>
-                                <?php echo htmlspecialchars($event['eventNeed']); ?></p>
-                            <p><strong>Volunteer Count Confirmed:</strong>
-                                <?php echo htmlspecialchars($event['eventConfirm']); ?></p>
+                            <p> <?php echo htmlspecialchars($event['eventDesc']); ?></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Start:</strong> <?php echo htmlspecialchars($event['eventStart']); ?></p>
+                                    <p><strong>End:</strong> <?php echo htmlspecialchars($event['eventEnd']); ?></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Volunteer Count Needed:</strong>
+                                        <?php echo htmlspecialchars($event['eventNeed']); ?></p>
+                                    <p><strong>Volunteer Count Confirmed:</strong>
+                                        <?php echo htmlspecialchars($event['eventConfirm']); ?></p>
+                                </div>
+                            </div>
                             <p><strong>Approval Status:</strong>
                                 <?php echo htmlspecialchars($event['eventApproval']); ?></p>
+
+                            <!-- Mark as Finished Button -->
+                            <?php if ($event['eventApproval'] !== 'Finished') { ?>
+                            <button id="markFinished" class="btn btn-warning mt-4">Mark as Finished</button>
+                            <?php } else { ?>
+                            <button id="markFinished" class="btn btn-secondary mt-4" disabled>Event Finished</button>
+                            <?php } ?>
+
+
 
                             <h3 class="mt-5">Participating Volunteers</h3>
                             <?php if (mysqli_num_rows($volunteersResult) > 0) { ?>
                             <table id="volunteersTable" class="table table-striped mt-3">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>NIC No.</th>
                                         <th>Email</th>
@@ -82,10 +114,13 @@ mysqli_close($con);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php while ($volunteer = mysqli_fetch_assoc($volunteersResult)) {
+                                    <?php 
+                                        $count = 1; // Initialize count variable
+                                        while ($volunteer = mysqli_fetch_assoc($volunteersResult)) {
                                             $attendanceStatus = $volunteer['attendanceStatus']; // Fetch the current status from the database
-                                            ?>
+                                        ?>
                                     <tr>
+                                        <td><?php echo $count++; ?></td> <!-- Display the count and increment it -->
                                         <td><?php echo htmlspecialchars($volunteer['userName']); ?></td>
                                         <td><?php echo htmlspecialchars($volunteer['userNIC']); ?></td>
                                         <td><?php echo htmlspecialchars($volunteer['userEmail']); ?></td>
@@ -93,9 +128,10 @@ mysqli_close($con);
                                         <td><?php echo htmlspecialchars($volunteer['timestamp']); ?></td>
                                         <td>
                                             <button
-                                                class="btn btn-sm <?php echo $attendanceStatus ? 'btn-success' : 'btn-danger'; ?> toggle-attendance"
+                                                class="btn btn-sm <?php echo $attendanceStatus ? 'btn-success' : 'btn-danger'; ?> <?php echo $event['eventApproval'] === 'Finished' ? 'btn-disabled' : 'toggle-attendance'; ?>"
                                                 data-userid="<?php echo $volunteer['userID']; ?>"
-                                                data-status="<?php echo $attendanceStatus; ?>">
+                                                data-status="<?php echo $attendanceStatus; ?>"
+                                                <?php echo $event['eventApproval'] === 'Finished' ? 'disabled' : ''; ?>>
                                                 <?php echo $attendanceStatus ? 'Present' : 'Absent'; ?>
                                             </button>
                                         </td>
@@ -104,6 +140,10 @@ mysqli_close($con);
                                     <?php } ?>
                                 </tbody>
                             </table>
+
+                            <!-- Download Button -->
+                            <button id="downloadPdfBtn" class="btn btn-info mt-3">Download Volunteer List</button>
+
 
                             <div class="d-flex justify-content-center mt-3">
                                 <!-- Center pagination -->
@@ -157,6 +197,27 @@ mysqli_close($con);
             var newStatus = currentStatus ? 0 : 1; // Toggle the status
             var eventID = <?php echo $eventID; ?>;
 
+            // Check if event is finished before toggling attendance
+            var eventApproval = <?php echo json_encode($event['eventApproval']); ?>;
+            if (eventApproval === 'Finished') {
+                Swal.fire(
+                    'Not Allowed',
+                    'Attendance cannot be updated for finished events.',
+                    'info'
+                );
+                return;
+            }
+
+            // Check if button is disabled
+            if ($button.hasClass('btn-disabled')) {
+                Swal.fire(
+                    'Not Allowed',
+                    'Attendance cannot be updated for finished events.',
+                    'info'
+                );
+                return;
+            }
+
             $.ajax({
                 url: 'toggle_attendance.php',
                 type: 'POST',
@@ -179,7 +240,7 @@ mysqli_close($con);
     });
     </script>
 
-    <script>
+    <!-- <script>
     $(document).ready(function() {
         // Initialize DataTable
         var table = $('#volunteersTable').DataTable({
@@ -192,7 +253,146 @@ mysqli_close($con);
 
         });
     });
+    </script> -->
+
+    <!-- Include jsPDF and jsPDF-AutoTable libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#volunteersTable').DataTable({
+            paging: true,
+            pageLength: 10,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: true
+        });
+
+        // Download PDF button functionality
+        $('#downloadPdfBtn').on('click', function() {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth(); // Get the width of the page
+
+            // Bold the event name and center it
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            const eventName = '<?php echo addslashes($event['eventName']); ?>';
+            const eventNameWidth = doc.getTextWidth(eventName);
+            doc.text(eventName, (pageWidth - eventNameWidth) / 2, 20); // Center the event name
+
+            // Event details with centered alignment
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal"); // Reset font to normal for other details
+            const eventDetails = [
+                'Description: <?php echo addslashes($event['eventDesc']); ?>',
+                'Start: <?php echo addslashes($event['eventStart']); ?>',
+                'End: <?php echo addslashes($event['eventEnd']); ?>',
+                'Volunteer Count Needed: <?php echo addslashes($event['eventNeed']); ?>',
+                'Volunteer Count Confirmed: <?php echo addslashes($event['eventConfirm']); ?>',
+                'Approval Status: <?php echo addslashes($event['eventApproval']); ?>'
+            ];
+
+            // Loop through event details and center each line
+            let startY = 30;
+            eventDetails.forEach(detail => {
+                const textWidth = doc.getTextWidth(detail);
+                doc.text(detail, (pageWidth - textWidth) / 2, startY);
+                startY += 10; // Adjust line spacing as needed
+            });
+
+            // Add volunteers table to the PDF
+            doc.autoTable({
+                html: '#volunteersTable',
+                startY: startY + 10, // Start the table below the event details
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [0, 123, 255]
+                }, // Customize header color
+                styles: {
+                    fontSize: 10
+                } // Adjust font size
+            });
+
+            // Save the PDF
+            doc.save('Volunteer_List.pdf');
+        });
+    });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('markFinished').addEventListener('click', function() {
+            // Show SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to mark this event as finished?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, mark as finished!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var eventId =
+                        <?php echo json_encode($event['eventID']); ?>; // Ensure eventID is correctly embedded
+
+                    // Create an XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'update_event_status.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            if (xhr.responseText.trim() === 'Success') {
+                                // Show success message and reload the page
+                                Swal.fire(
+                                    'Updated!',
+                                    'The event has been marked as finished.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Failed to update the event status.',
+                                    'error'
+                                );
+                            }
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                'AJAX request failed. Status: ' + xhr.status,
+                                'error'
+                            );
+                        }
+                    };
+
+                    xhr.onerror = function() {
+                        Swal.fire(
+                            'Error!',
+                            'AJAX request error.',
+                            'error'
+                        );
+                    };
+
+                    // Send the request with data
+                    xhr.send('eventID=' + encodeURIComponent(eventId) + '&status=Finished');
+                }
+            });
+        });
+    });
+    </script>
+
+
+
 </body>
 
 </html>

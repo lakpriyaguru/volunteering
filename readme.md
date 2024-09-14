@@ -22,16 +22,15 @@ A 3<sup>rd</sup> year undergraduate CS project under the CMIS 3224: Web Designin
 | 202213              | G R Lakpriya       | CMIS Special | lakpriyagurugamage@gmail.com    |
 | 202216              | L G R H Lihinigama | ELTN Major   | rashmilihinigama@gmail.com      |
 
-<!---
 ### Project Duration :
 
-| from                | -                               | to                  |
-| ------------------- | ------------------------------- | ------------------- |
-| ## ##########, 2024 | ## days OR ## weeks and ## days | ## ##########, 2024 |
+| from                | -                                | to                   |
+| ------------------- | -------------------------------- | -------------------- |
+| 04th of March, 2024 | 194 days OR 27 weeks and 05 days | 14th September, 2024 |
 
 ### Documentation :
 
-| Document Name | Submitted Date |
-| ------------- | -------------- |
-| -             | -              |
--->
+| Document Name         | Submitted Date      |
+| --------------------- | ------------------- |
+| Progress Presentation | 04th of March, 2024 |
+| Final Presentation    | 04th of March, 2024 |

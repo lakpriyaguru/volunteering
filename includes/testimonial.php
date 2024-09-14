@@ -11,29 +11,32 @@
         </div>
         <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
             <div class="testimonial-item text-center">
-                <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg"
-                    style="width: 100px; height: 100px" />
-                <div class="testimonial-text rounded text-center p-4">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
-                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
-                        elitr erat, sit sit erat. At rebum justo, sea clita.
-                    </p>
-                    <h5 class="mb-1">John Smith</h5>
-                    <span class="fst-italic">Software Engineer</span>
-                </div>
-            </div>
-            <div class="testimonial-item text-center">
                 <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-2.jpg"
                     style="width: 100px; height: 100px" />
                 <div class="testimonial-text rounded text-center p-4">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
-                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
-                        elitr erat, sit sit erat. At rebum justo, sea clita.
+                        “Joining Volunteering has been one of the most fulfilling experiences of my life. Their
+                        dedication to supporting volunteers and managing projects is second to none. The impact we’ve
+                        made together is palpable, and the sense of community and purpose is truly inspiring. I’m not
+                        surprised that thousands of volunteers and organizations trust and applaud their work!”
+                    </p>
+                    <h5 class="mb-1">John Smith</h5>
+                    <span class="fst-italic">Volunteer</span>
+                </div>
+            </div>
+            <div class="testimonial-item text-center">
+                <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg"
+                    style="width: 100px; height: 100px" />
+                <div class="testimonial-text rounded text-center p-4">
+                    <p>
+                        “Our collaboration with Volunteering has been a game-changer. Their exceptional
+                        organization and genuine care for our mission have made every project a success. The positive
+                        feedback from our team and the seamless execution of our joint initiatives speak volumes about
+                        their commitment and efficiency.”
+
                     </p>
                     <h5 class="mb-1">Sarah Thompson</h5>
-                    <span class="fst-italic">Marketing Manager</span>
+                    <span class="fst-italic">IEEE</span>
                 </div>
             </div>
             <div class="testimonial-item text-center">
@@ -41,12 +44,14 @@
                     style="width: 100px; height: 100px" />
                 <div class="testimonial-text rounded text-center p-4">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor justo dolor, et ipsum amet.
-                        Duis duo justo, duo labore sed, sed. Magna ut diam sit et amet stet. Eos sed clita erat, magna
-                        elitr erat, sit sit erat. At rebum justo, sea clita.
+                        “The experience with Volunteering has been overwhelmingly positive. They excel at
+                        creating an environment where volunteers feel valued and empowered. The professionalism and
+                        enthusiasm they bring to each project have earned the trust and admiration of countless
+                        individuals and organizations.”
+
                     </p>
-                    <h5 class="mb-1">Emily Johnson</h5>
-                    <span class="fst-italic">Marketing Consultant</span>
+                    <h5 class="mb-1">John Doe</h5>
+                    <span class="fst-italic">Volunteer</span>
                 </div>
             </div>
         </div>

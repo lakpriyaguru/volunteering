@@ -63,19 +63,19 @@ mysqli_close($con);
         <div class="container">
             <div class="row g-5 justify-content-center">
                 <?php foreach ($organizations as $organization): ?>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card">
-                            <img src="uploads/<?php echo htmlspecialchars($organization['orgImg']); ?>"
-                                class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($organization['orgName']); ?>"
-                                style="width: 75%; height: 75%;" />
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card">
+                        <img src="uploads/<?php echo htmlspecialchars($organization['orgImg']); ?>"
+                            class="card-img-top mx-auto" alt="<?php echo htmlspecialchars($organization['orgName']); ?>"
+                            style="width: 150px; height: 150px;" />
 
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($organization['orgName']); ?></h5>
-                                <p class="card-text"><?php echo htmlspecialchars($organization['orgDesc']); ?></p>
-                                <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
-                            </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($organization['orgName']); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($organization['orgDesc']); ?></p>
+                            <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
                         </div>
                     </div>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>

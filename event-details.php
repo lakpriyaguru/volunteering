@@ -24,11 +24,15 @@ if (isset($_GET['event_id'])) {
     exit; // Stop execution if event ID not provided
 }
 
+$already_participated = false;
 // Check if user has already participated
-$user_id = $_SESSION['ID'];
-$sql_check_participation = "SELECT * FROM participation WHERE userID = $user_id AND eventID = $event_id";
-$result_check_participation = mysqli_query($con, $sql_check_participation);
-$already_participated = mysqli_num_rows($result_check_participation) > 0;
+if (isset($_SESSION['ID'])) {
+    $user_id = $_SESSION['ID'];
+    $sql_check_participation = "SELECT * FROM participation WHERE userID = $user_id AND eventID = $event_id";
+    $result_check_participation = mysqli_query($con, $sql_check_participation);
+    $already_participated = mysqli_num_rows($result_check_participation) > 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -81,13 +85,13 @@ $already_participated = mysqli_num_rows($result_check_participation) > 0;
                         <div class="mt-3">
                             <a href="javascript:history.back()" class="btn btn-secondary me-2">Go Back</a>
                             <?php if ($already_participated): ?>
-                                <button class="btn btn-primary" disabled>Already Participated</button>
-                            <?php elseif ($_SESSION['Role'] != 'organization'): ?>
-                                <?php if ($event['eventConfirm'] >= $event['eventNeed']): ?>
-                                    <button class="btn btn-primary" disabled>Event Full</button>
-                                <?php else: ?>
-                                    <a href="#" onclick="participate()" class="btn btn-primary">Participate</a>
-                                <?php endif; ?>
+                            <button class="btn btn-primary" disabled>Already Signed up</button>
+                            <?php elseif (isset($_SESSION['Role']) && $_SESSION['Role'] != 'organization'): ?>
+                            <?php if ($event['eventConfirm'] >= $event['eventNeed']): ?>
+                            <button class="btn btn-primary" disabled>Event Full</button>
+                            <?php else: ?>
+                            <a href="#" onclick="participate()" class="btn btn-primary">Signup</a>
+                            <?php endif; ?>
                             <?php endif; ?>
                         </div>
 
@@ -115,67 +119,68 @@ $already_participated = mysqli_num_rows($result_check_participation) > 0;
 
     <!-- Initialize Owl Carousel -->
     <script>
-        function participate() {
-            var event_id = <?php echo $event_id; ?>;
-            var user_id = <?php echo $_SESSION['ID']; ?>;
-            var event_need = <?php echo $event['eventNeed']; ?>;
-            var event_confirm = <?php echo $event['eventConfirm']; ?>;
-            event_confirm = event_confirm + 1;
+    function participate() {
+        var event_id = <?php echo $event_id; ?>;
+        var user_id = <?php echo $_SESSION['ID']; ?>;
+        var event_need = <?php echo $event['eventNeed']; ?>;
+        var event_confirm = <?php echo $event['eventConfirm']; ?>;
+        event_confirm = event_confirm + 1;
 
-            if (event_confirm > event_need) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Event is full. Please try another event.',
-                });
-                return;
-            }
-
+        if (event_confirm > event_need) {
             Swal.fire({
-                title: 'Confirm Participation',
-                text: 'Are you sure you want to participate in this event?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, participate',
-                cancelButtonText: 'No, cancel',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: "participate.php",
-                        data: {
-                            event_id: event_id,
-                            user_id: user_id
-                        },
-                        success: function (response) {
-                            if (response == "success") {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success!',
-                                    text: 'Participation successful',
-                                }).then((result) => {
-                                    if (result.isConfirmed || result.isDismissed) {
-                                        window.location.href = "event-details.php?event_id=" + event_id;
-                                    }
-                                });
-                            } else if (response == "already_participated") {
-                                Swal.fire({
-                                    icon: 'info',
-                                    title: 'Oops...',
-                                    text: 'You have already participated in this event.',
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Participation failed. Please try again later.',
-                                });
-                            }
-                        }
-                    });
-                }
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Event is full. Please try another event.',
             });
+            return;
         }
+
+        Swal.fire({
+            title: 'Confirm Participation',
+            text: 'Are you sure you want to participate in this event?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, signup',
+            cancelButtonText: 'No, cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "participate.php",
+                    data: {
+                        event_id: event_id,
+                        user_id: user_id
+                    },
+                    success: function(response) {
+                        if (response == "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Signed up successful',
+                            }).then((result) => {
+                                if (result.isConfirmed || result.isDismissed) {
+                                    window.location.href = "event-details.php?event_id=" +
+                                        event_id;
+                                }
+                            });
+                        } else if (response == "already_participated") {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Oops...',
+                                text: 'You have already signed up in this event.',
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Participation failed. Please try again later.',
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
     </script>
 </body>
 

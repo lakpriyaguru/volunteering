@@ -191,6 +191,15 @@ mysqli_close($con);
 
 <?php include_once ('includes/header.php'); ?>
 
+<style>
+.is-invalid {
+    border-color: #dc3545;
+    /* Bootstrap red color for error */
+    background-color: #f8d7da;
+    /* Light red background */
+}
+</style>
+
 <body>
     <?php include_once ('includes/navbar.php'); ?>
 
@@ -212,53 +221,59 @@ mysqli_close($con);
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5 justify-content-center">
-                <div class="col-lg-10 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="col-lg-12 wow fadeInUp text-center" data-wow-delay="0.1s">
                     <div class="card shadow-lg border-0 rounded-lg">
                         <div class="card-header bg-primary text-white text-center py-4">
                             <h1 class="display-6 mb-0">Your Events</h1>
                         </div>
                         <div class="card-body p-5">
                             <?php if (mysqli_num_rows($eventsResult) > 0) { ?>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Event Name</th>
-                                            <th>Description</th>
-                                            <th>Start</th>
-                                            <th>End</th>
-                                            <th>Volunteer Count</th>
-                                            <th>Approval</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php while ($event = mysqli_fetch_assoc($eventsResult)) { ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($event['eventName']); ?></td>
-                                                <td><?php echo htmlspecialchars($event['eventDesc']); ?></td>
-                                                <td><?php echo htmlspecialchars($event['eventStart']); ?></td>
-                                                <td><?php echo htmlspecialchars($event['eventEnd']); ?></td>
-                                                <td><?php echo htmlspecialchars($event['eventNeed']) . ' (Confirmed: ' . htmlspecialchars($event['eventConfirm']) . ')'; ?>
-                                                </td>
-                                                <td><?php echo htmlspecialchars($event['eventApproval']); ?></td>
-                                                <td>
-                                                    <a href="orgViewEvent.php?eventID=<?php echo $event['eventID']; ?>"
-                                                        class="btn btn-info btn-sm">View</a>
-                                                    <a href="javascript:void(0);"
-                                                        onclick="openEditModal(<?php echo $event['eventID']; ?>, '<?php echo htmlspecialchars(addslashes($event['eventName'])); ?>', '<?php echo htmlspecialchars(addslashes($event['eventDesc'])); ?>', '<?php echo htmlspecialchars($event['eventStart']); ?>', '<?php echo htmlspecialchars($event['eventEnd']); ?>', '<?php echo htmlspecialchars($event['eventNeed']); ?>')"
-                                                        class="btn btn-primary btn-sm">Edit</a>
-                                                    <a href="javascript:void(0);"
-                                                        onclick="confirmDelete(<?php echo $event['eventID']; ?>);"
-                                                        class="btn btn-danger btn-sm">Delete</a>
-                                                </td>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Event Name</th>
+                                        <th>Description</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Volunteer Count</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($event = mysqli_fetch_assoc($eventsResult)) { ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($event['eventName']); ?></td>
+                                        <td><?php echo htmlspecialchars($event['eventDesc']); ?></td>
+                                        <td><?php echo htmlspecialchars($event['eventStart']); ?></td>
+                                        <td><?php echo htmlspecialchars($event['eventEnd']); ?></td>
+                                        <td><?php echo htmlspecialchars($event['eventNeed']) . ' (Confirmed: ' . htmlspecialchars($event['eventConfirm']) . ')'; ?>
+                                        </td>
+                                        <td><?php echo htmlspecialchars($event['eventApproval']); ?></td>
+                                        <td>
+                                            <?php if (htmlspecialchars($event['eventApproval']) == 'Finished') { ?>
+                                            <a href="orgViewEvent.php?eventID=<?php echo $event['eventID']; ?>"
+                                                class="btn btn-info btn-sm">View</a>
+                                            <?php } else if (htmlspecialchars($event['eventApproval']) == 'Approved') { ?>
+                                            <a href="orgViewEvent.php?eventID=<?php echo $event['eventID']; ?>"
+                                                class="btn btn-info btn-sm">View</a>
+                                            <a href="javascript:void(0);"
+                                                onclick="openEditModal(<?php echo $event['eventID']; ?>, '<?php echo htmlspecialchars(addslashes($event['eventName'])); ?>', '<?php echo htmlspecialchars(addslashes($event['eventDesc'])); ?>', '<?php echo htmlspecialchars($event['eventStart']); ?>', '<?php echo htmlspecialchars($event['eventEnd']); ?>', '<?php echo htmlspecialchars($event['eventNeed']); ?>')"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                            <?php } else { ?>
+                                            <a href="javascript:void(0);"
+                                                onclick="confirmDelete(<?php echo $event['eventID']; ?>);"
+                                                class="btn btn-danger btn-sm">Delete</a>
+                                            <?php } ?>
+                                        </td>
 
 
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                             <?php } else { ?>
-                                <p class="text-center">No events found. Click the button below to add a new event.</p>
+                            <p class="text-center">No events found. Click the button below to add a new event.</p>
                             <?php } ?>
                             <div class="text-center mt-4">
                                 <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal"
@@ -273,6 +288,7 @@ mysqli_close($con);
     <!-- Events Table End -->
 
     <!-- Add Event Modal Start -->
+    <!-- Add Event Modal Start -->
     <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -280,7 +296,7 @@ mysqli_close($con);
                     <h5 class="modal-title" id="addEventModalLabel">Add New Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="orgEvent.php" enctype="multipart/form-data">
+                <form id="addEventForm" method="POST" action="orgEvent.php" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="eventName" class="form-label">Event Name</label>
@@ -294,10 +310,14 @@ mysqli_close($con);
                             <label for="eventStart" class="form-label">Event Start</label>
                             <input type="datetime-local" class="form-control" id="eventStart" name="eventStart"
                                 required>
+                            <div id="eventStartError" class="text-danger mt-2" style="display: none;">Event start date
+                                must be in the future.</div>
                         </div>
                         <div class="mb-3">
                             <label for="eventEnd" class="form-label">Event End</label>
                             <input type="datetime-local" class="form-control" id="eventEnd" name="eventEnd" required>
+                            <div id="eventEndError" class="text-danger mt-2" style="display: none;">Event end date must
+                                be the same as or after the start date.</div>
                         </div>
                         <div class="mb-3">
                             <label for="eventNeed" class="form-label">Volunteer Count Needed</label>
@@ -311,13 +331,17 @@ mysqli_close($con);
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="add_event" class="btn btn-primary">Add Event</button>
+                        <button type="submit" id="addEventButton" name="add_event" class="btn btn-primary">Add
+                            Event</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
+    <!-- Add Event Modal End -->
+
+    <!-- Add Event Modal End -->
+
     <!-- Add Event Modal End -->
 
     <!-- Edit Event Modal Start -->
@@ -379,50 +403,102 @@ mysqli_close($con);
     <script src="js/main.js"></script>
 
     <script>
-        function confirmDelete(eventID) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'Do you really want to delete this event?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'orgEvent.php?delete=' + eventID;
-                }
-            });
+    document.addEventListener('DOMContentLoaded', function() {
+        var eventStartInput = document.getElementById('eventStart');
+        var eventEndInput = document.getElementById('eventEnd');
+        var eventStartError = document.getElementById('eventStartError');
+        var eventEndError = document.getElementById('eventEndError');
+        var addEventButton = document.getElementById('addEventButton');
+
+        function validateEventDates() {
+            var eventStart = new Date(eventStartInput.value);
+            var eventEnd = new Date(eventEndInput.value);
+            var currentDate = new Date();
+
+            // Reset previous error state
+            eventStartInput.classList.remove('is-invalid');
+            eventEndInput.classList.remove('is-invalid');
+            eventStartError.style.display = 'none';
+            eventEndError.style.display = 'none';
+            addEventButton.classList.remove('btn-secondary');
+            addEventButton.classList.add('btn-primary');
+            addEventButton.disabled = false;
+
+            var hasError = false;
+
+            // Validate event start date
+            if (eventStart <= currentDate) {
+                eventStartInput.classList.add('is-invalid');
+                eventStartError.style.display = 'block';
+                hasError = true;
+            }
+
+            // Validate event end date
+            if (eventEnd < eventStart) {
+                eventEndInput.classList.add('is-invalid');
+                eventEndError.style.display = 'block';
+                hasError = true;
+            }
+
+            // Disable submit button if there are errors
+            if (hasError) {
+                addEventButton.classList.add('btn-secondary');
+                addEventButton.classList.remove('btn-primary');
+                addEventButton.disabled = true;
+            }
         }
+
+        // Add event listeners for input changes
+        eventStartInput.addEventListener('input', validateEventDates);
+        eventEndInput.addEventListener('input', validateEventDates);
+    });
     </script>
 
     <script>
-        function openEditModal(eventID, eventName, eventDesc, eventStart, eventEnd, eventNeed) {
-            document.getElementById('editEventID').value = eventID;
-            document.getElementById('editEventName').value = eventName;
-            document.getElementById('editEventDesc').value = eventDesc;
-            document.getElementById('editEventStart').value = eventStart;
-            document.getElementById('editEventEnd').value = eventEnd;
-            document.getElementById('editEventNeed').value = eventNeed;
-            var editEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
-            editEventModal.show();
-        }
+    function confirmDelete(eventID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this event?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'orgEvent.php?delete=' + eventID;
+            }
+        });
+    }
     </script>
 
     <script>
-        function confirmDelete(eventID) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'Do you really want to delete this event?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'orgEvent.php?delete=' + eventID;
-                }
-            });
-        }
+    function openEditModal(eventID, eventName, eventDesc, eventStart, eventEnd, eventNeed) {
+        document.getElementById('editEventID').value = eventID;
+        document.getElementById('editEventName').value = eventName;
+        document.getElementById('editEventDesc').value = eventDesc;
+        document.getElementById('editEventStart').value = eventStart;
+        document.getElementById('editEventEnd').value = eventEnd;
+        document.getElementById('editEventNeed').value = eventNeed;
+        var editEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+        editEventModal.show();
+    }
+    </script>
+
+    <script>
+    function confirmDelete(eventID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this event?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'orgEvent.php?delete=' + eventID;
+            }
+        });
+    }
     </script>
 
 </body>

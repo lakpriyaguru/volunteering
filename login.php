@@ -104,9 +104,9 @@ mysqli_close($con);
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <a href="reset.php" class="text-primary">Forgot Password?</a>
-                            </div>
+                            </div> -->
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary py-2" name="login">Login</button>
                             </div>

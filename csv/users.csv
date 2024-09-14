@@ -1,0 +1,11 @@
+userName,userEmail,userPassword,userAddress,userNIC,userContact,userImg,userNoOfEvents
+Lakpriya Gurugamage,user1@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,Nugegoda,200030402702,0766604494,default/user.png,0
+Olivia Johnson,user2@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,456 Oak St,123456788V,0771234562,default/user.png,0
+Noah Williams,user3@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,789 Pine St,123456787V,0771234563,default/user.png,0
+Emma Brown,user4@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,101 Cedar St,123456786V,0771234564,default/user.png,0
+Ava Jones,user5@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,202 Birch St,123456785V,0771234565,default/user.png,0
+Elijah Davis,user6@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,303 Willow St,123456784V,0771234566,default/user.png,0
+Sophia Garcia,user7@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,404 Spruce St,123456783V,0771234567,default/user.png,0
+James Miller,user8@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,505 Redwood St,123456782V,0771234568,default/user.png,0
+Isabella Martinez,user9@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,606 Cypress St,123456781V,0771234569,default/user.png,0
+William Anderson,user10@vms.lk,5f4dcc3b5aa765d61d8327deb882cf99,707 Palm St,123456780V,0771234570,default/user.png,0

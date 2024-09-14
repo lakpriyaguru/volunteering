@@ -30,86 +30,19 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <?php if ($_SESSION['adminID'] == 1): ?>
-
-                    <!--Subadmins--->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Sub-Admins
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="subadminAdd.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="subadminManage.php" class="nav-link">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Manage</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <?php endif; ?>
-
-
-
-
                 <!----- Tables--->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="orgManage.php" class="nav-link">
                         <i class="nav-icon fas fa-building"></i>
-                        <p>Organizations
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <p>Organizations</p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="orgAdd.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="orgManage.php" class="nav-link">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Manage</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="userManage.php" class="nav-link">
                         <i class="nav-icon fas fa-hands-helping"></i>
-                        <p>Volunteers
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <p>Volunteers </p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="userAdd.php" class="nav-link">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="userManage.php" class="nav-link">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Manage</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
@@ -120,12 +53,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="eventAdd.php" class="nav-link">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Add</p>
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a href="eventApproval.php" class="nav-link">
@@ -160,12 +93,12 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="change-password.php" class="nav-link">
                                 <i class="fas fa-key nav-icon"></i>
                                 <p>Change Password</p>
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a href="logout.php" class="nav-link">

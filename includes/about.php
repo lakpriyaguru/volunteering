@@ -17,12 +17,14 @@
                     <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
                         <p class="text-dark mb-2">We are dedicated to providing assistance and support to those facing
                             challenges. Our mission is to make a positive impact on communities worldwide.</p>
-                        <span class="text-primary">Jhon Doe, Founder</span>
+                        <!-- <span class="text-primary">Jhon Doe, Founder</span> -->
                     </div>
-                    <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor erat et elit
-                        placerat, sed tempus odio condimentum. Aliquam diam amet diam et eos. Clita erat ipsum et lorem
-                        et sit, sed stet lorem sit clita duo justo magna dolore erat amet.</p>
-                    <a class="btn btn-primary py-2 px-3 me-3" href="about.php">
+                    <p class="mb-5">Volunteering simplifies the recruitment, organization, and coordination of
+                        volunteers. It offers features for posting opportunities, scheduling shifts, tracking hours, and
+                        facilitating communication. With tools for onboarding and recognizing contributions, also
+                        ensures
+                        efficient and impactful volunteer management.</p>
+                    <!-- <a class="btn btn-primary py-2 px-3 me-3" href="about.php">
                         Learn More
                         <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                             <i class="fa fa-arrow-right"></i>
@@ -33,7 +35,7 @@
                         <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                             <i class="fa fa-arrow-right"></i>
                         </div>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
